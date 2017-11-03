@@ -1,0 +1,201 @@
+[[plugins]] #dein
+repo = 'shougo/dein.vim'
+hook_add = 'nnoremap du:call dein#update()<cr>'
+
+[[plugins]] #comment out
+repo = 'tyru/caw.vim'
+hook_add = '''
+  nmap <C-c> <Plug>(caw:hatpos:toggle)
+  vmap <C-c> <Plug>(caw:hatpos:toggle)
+'''
+[[plugins]] #tagbar, show the overview of algorithm
+repo = 'majutsushi/tagbar'
+hook_add = '''
+  let g:tagbar_width = 30        
+  let g:tagbar_autoshowtag = 1   
+  nmap <silent> <C-f><C-o> :<C-u>:TagbarToggle<CR>
+'''
+
+[[plugins]] #trailing whitespace
+repo = 'bronson/vim-trailing-whitespace'
+
+
+[[plugins]] #submode
+repo = 'kana/vim-submode'
+hook_post_source = '''
+  call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
+  call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
+  call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>+')
+  call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>-')
+  call submode#map('winsize', 'n', '', '>', '<C-w>>')
+  call submode#map('winsize', 'n', '', '<', '<C-w><')
+  call submode#map('winsize', 'n', '', '+', '<C-w>+')
+  call submode#map('winsize', 'n', '', '-', '<C-w>-')
+'''
+
+[[plugins]] #syntax checker
+repo = 'scrooloose/syntastic'
+hook_add = '''
+" statusline
+  set statusline=%t       "tail of the filename
+  set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+  set statusline+=%{&ff}] "file format
+  set statusline+=%h      "help file flag
+  set statusline+=%m      "modified flag
+  set statusline+=%r      "read only flag
+  set statusline+=%y      "filetype
+  set statusline+=%=      "left/right separator
+  set statusline+=%c,     "cursor column
+  set statusline+=%l/%L   "cursor line/total lines
+  set statusline+=\ %P    "percent through file
+
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_enable_signs = 1
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_check_on_wq = 0
+  let g:syntastic_loc_list_height=5
+'''
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  set laststatus=2
+  if !has('gui_running')
+  set t_Co=256
+  endif
+  let g:lightline = {
+        \ 'colorscheme': 'wombat',
+        \ 'mode_map': {'c': 'NORMAL'},
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'LightlineModified',
+        \   'readonly': 'LightlineReadonly',
+        \   'fugitive': 'LightlineFugitive',
+        \   'filename': 'LightlineFilename',
+        \   'fileformat': 'LightlineFileformat',
+        \   'filetype': 'LightlineFiletype',
+        \   'fileencoding': 'LightlineFileencoding',
+        \   'mode': 'LightlineMode'
+        \ }
+        \ }
+
+  function! LightlineModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
+
+  function! LightlineReadonly()
+    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+  endfunction
+
+  function! LightlineFilename()
+    return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+          \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+          \  &ft == 'unite' ? unite#get_status_string() :
+          \  &ft == 'vimshell' ? vimshell#get_status_string() :
+          \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+          \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+  endfunction
+
+  function! LightlineFugitive()
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    else
+      return ''
+    endif
+  endfunction
+
+  function! LightlineFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+  endfunction
+
+  function! LightlineFiletype()
+    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  endfunction
+
+  function! LightlineFileencoding()
+    return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  endfunction
+
+  function! LightlineMode()
+    return winwidth(0) > 60 ? lightline#mode() : ''
+  endfunction
+'''
+
+# [[plugins]] #HEALING, keep good my QoL
+# repo = 'drillbits/nyan-modoki.vim'
+# hook_add = '''
+# 	set statusline=%F%m%r%h%w[%{&ff}]%=%{g:NyanModoki()}(%l,%c)[%P]
+# 	let g:nyan_modoki_select_cat_face_number = 4
+# 	let g:nayn_modoki_animation_enabled= 1
+# '''
+
+[[plugins]] #color
+repo = 'mhartington/oceanic-next'
+
+[[plugins]] #color
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]] #color
+repo = 'jacoborus/tender.vim'
+
+[[plugins]] #file manager
+repo = 'justinmk/vim-dirvish'
+hook_add = 'nnoremap <silent> <Space>d :<C-u>Dirvish<CR>'
+
+[[plugins]] #judge the fileptype in context
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]] #change the file-type juding in context
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]] #paralelly awake the system
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif dein#util#_is_cygwin()
+    let cmd = 'make -f make_cygwin.mak'
+  elseif executable('gmake')
+    let cmd = 'gmake'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+  h:noh
+'''
+
+[[plugins]] #dein
+repo = 'Shougo/denite.nvim'
+hook_post_source = '''
+  call denite#custom#var('file_rec', 'command',
+        \['ag', '--follow', '--nocolor', '--no-group', '-g', ''])
+  call denite#custom#var('grep', 'command', ['ag'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'default_opts',
+        \['--folow', '--no-group', '--no-color'])
+  call denite#custom#source('file_mru', 'matchers',
+        \['matcher_fuzzy', 'matcher_project_files'])
+  call denite#custom#source('file_mru', 'converters',
+        \['converter_relative_word'])
+'''
+depends = ['neomru.vim']
+on_event = 'BufRead'
+hook_add = '''
+  nmap <silent> <C-f><C-t> :<C-u>Denite filetype<CR>
+  nmap <silent> <C-f><C-p> :<C-u>Denite file_rec<CR>
+  nmap <silent> <C-f><C-j> :<C-u>Denite line<CR>
+  nmap <silent> <C-f><C-b> :<C-u>Denite buffer<CR>
+  nmap <silent> <C-f><C-g> :<C-u>Denite grep<CR>
+  nmap <silent> <C-f><C-]> :<C-u>DeniteCursorWord grep<CR>
+  nmap <silent> <C-f><C-u> :<C-u>Denite file_mru<CR>
+  nmap <silent> <C-f><C-y> :<C-u>Denite neoyank<CR>
+  nmap <silent> <C-f><C-r> :<C-u>Denite -resume<CR>
+  nmap <silent> <C-f>; :<C-u>Denite -resume -immediately -select=+1<CR>
+  nmap <silent> <C-f>- :<C-u>Denite -resume -immediately -select=-1<CR>
+  nmap <silent> <C-f><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+  nnoremap ml :<C-f>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+'''
