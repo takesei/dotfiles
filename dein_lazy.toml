@@ -126,18 +126,10 @@ on_ft = ['snippet']
 depends = ['neosnippet-snippets']
 
 [[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_i = 1
-
-[[plugins]]
 repo      = 'Shougo/neomru.vim'
 on_source = ['denite.vim']
 on_path = '.*'
 hook_post_source = '''
-call denite#custom#var('file_rec', 'command',
-\ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
-call denite#custom#var('grep', 'command',
-\ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
 call denite#custom#var('grep', 'default_opts', [])
 call denite#custom#var('grep', 'recursive_opts', [])
 '''

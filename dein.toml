@@ -11,10 +11,13 @@ hook_add = '''
 [[plugins]] #tagbar, show the overview of algorithm
 repo = 'majutsushi/tagbar'
 hook_add = '''
-  let g:tagbar_width = 30        
-  let g:tagbar_autoshowtag = 1   
+  let g:tagbar_width = 30
+  let g:tagbar_autoshowtag = 1
   nmap <silent> <C-f><C-o> :<C-u>:TagbarToggle<CR>
 '''
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
 
 [[plugins]] #trailing whitespace
 repo = 'bronson/vim-trailing-whitespace'
@@ -32,31 +35,6 @@ hook_post_source = '''
   call submode#map('winsize', 'n', '', '+', '<C-w>+')
   call submode#map('winsize', 'n', '', '-', '<C-w>-')
 '''
-
-[[plugins]] #syntax checker
-repo = 'scrooloose/syntastic'
-hook_add = '''
-" statusline
-  set statusline=%t       "tail of the filename
-  set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
-  set statusline+=%{&ff}] "file format
-  set statusline+=%h      "help file flag
-  set statusline+=%m      "modified flag
-  set statusline+=%r      "read only flag
-  set statusline+=%y      "filetype
-  set statusline+=%=      "left/right separator
-  set statusline+=%c,     "cursor column
-  set statusline+=%l/%L   "cursor line/total lines
-  set statusline+=\ %P    "percent through file
-
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_enable_signs = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_check_on_wq = 0
-  let g:syntastic_loc_list_height=5
-'''
-
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
@@ -122,6 +100,55 @@ hook_add = '''
   function! LightlineMode()
     return winwidth(0) > 60 ? lightline#mode() : ''
   endfunction
+'''
+
+# [[plugins]] #syntax checker
+# repo = 'scrooloose/syntastic'
+# hook_add = '''
+# " statusline
+#   set statusline=%t       "tail of the filename
+#   set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+#   set statusline+=%{&ff}] "file format
+#   set statusline+=%h      "help file flag
+#   set statusline+=%m      "modified flag
+#   set statusline+=%r      "read only flag
+#   set statusline+=%y      "filetype
+#   set statusline+=%=      "left/right separator
+#   set statusline+=%c,     "cursor column
+#   set statusline+=%l/%L   "cursor line/total lines
+#   set statusline+=\ %P    "percent through file
+#
+# 	let g:syntastic_always_populate_loc_list = 1
+# 	let g:syntastic_enable_signs = 1
+# 	let g:syntastic_auto_loc_list = 1
+# 	let g:syntastic_check_on_open = 1
+# 	let g:syntastic_check_on_wq = 0
+#   let g:syntastic_loc_list_height=5
+# '''
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+  nmap <silent> <C-f><C-e> <Plug>(ale_next_wrap)
+  nmap <silent> <C-f><C-w> <Plug>(ale_previous_wrap)
+'''
+
+
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+hook_post_source = '''
+let g:lightline.component_expand = {
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \ }
+let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+let g:lightline#ale#indicator_warnings="⨉ "
+let g:lightline#ale#indicator_errors="⚠ "
 '''
 
 # [[plugins]] #HEALING, keep good my QoL
@@ -194,8 +221,6 @@ hook_add = '''
   nmap <silent> <C-f><C-u> :<C-u>Denite file_mru<CR>
   nmap <silent> <C-f><C-y> :<C-u>Denite neoyank<CR>
   nmap <silent> <C-f><C-r> :<C-u>Denite -resume<CR>
-  nmap <silent> <C-f>; :<C-u>Denite -resume -immediately -select=+1<CR>
-  nmap <silent> <C-f>- :<C-u>Denite -resume -immediately -select=-1<CR>
   nmap <silent> <C-f><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
   nnoremap ml :<C-f>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
 '''
