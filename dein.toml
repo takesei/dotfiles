@@ -35,6 +35,24 @@ hook_post_source = '''
   call submode#map('winsize', 'n', '', '+', '<C-w>+')
   call submode#map('winsize', 'n', '', '-', '<C-w>-')
 '''
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+  nmap <silent> <C-f><C-e> <Plug>(ale_next_wrap)
+  nmap <silent> <C-f><C-w> <Plug>(ale_previous_wrap)
+  let g:ale_open_list = 1
+  let g:ale_list_window_size=8
+  let g:ale_keep_list_window_open = 0
+  let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+  let g:ale_echo_msg_error_str = '⨉'
+  let g:ale_echo_msg_warning_str = '⚠'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_linters = {
+        \'python': ['pylint']
+        \}
+'''
+
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
@@ -46,7 +64,7 @@ hook_add = '''
         \ 'colorscheme': 'wombat',
         \ 'mode_map': {'c': 'NORMAL'},
         \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+        \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'ale'] ]
         \ },
         \ 'component_function': {
         \   'modified': 'LightlineModified',
@@ -56,7 +74,8 @@ hook_add = '''
         \   'fileformat': 'LightlineFileformat',
         \   'filetype': 'LightlineFiletype',
         \   'fileencoding': 'LightlineFileencoding',
-        \   'mode': 'LightlineMode'
+        \   'mode': 'LightlineMode',
+        \   'ale': 'ALEGetStatusLine'
         \ }
         \ }
 
@@ -102,62 +121,6 @@ hook_add = '''
   endfunction
 '''
 
-# [[plugins]] #syntax checker
-# repo = 'scrooloose/syntastic'
-# hook_add = '''
-# " statusline
-#   set statusline=%t       "tail of the filename
-#   set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
-#   set statusline+=%{&ff}] "file format
-#   set statusline+=%h      "help file flag
-#   set statusline+=%m      "modified flag
-#   set statusline+=%r      "read only flag
-#   set statusline+=%y      "filetype
-#   set statusline+=%=      "left/right separator
-#   set statusline+=%c,     "cursor column
-#   set statusline+=%l/%L   "cursor line/total lines
-#   set statusline+=\ %P    "percent through file
-#
-# 	let g:syntastic_always_populate_loc_list = 1
-# 	let g:syntastic_enable_signs = 1
-# 	let g:syntastic_auto_loc_list = 1
-# 	let g:syntastic_check_on_open = 1
-# 	let g:syntastic_check_on_wq = 0
-#   let g:syntastic_loc_list_height=5
-# '''
-
-[[plugins]]
-repo = 'w0rp/ale'
-hook_add = '''
-  nmap <silent> <C-f><C-e> <Plug>(ale_next_wrap)
-  nmap <silent> <C-f><C-w> <Plug>(ale_previous_wrap)
-'''
-
-
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
-hook_post_source = '''
-let g:lightline.component_expand = {
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ }
-let g:lightline.component_type = {
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \ }
-let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
-let g:lightline#ale#indicator_warnings="⨉ "
-let g:lightline#ale#indicator_errors="⚠ "
-'''
-
-# [[plugins]] #HEALING, keep good my QoL
-# repo = 'drillbits/nyan-modoki.vim'
-# hook_add = '''
-# 	set statusline=%F%m%r%h%w[%{&ff}]%=%{g:NyanModoki()}(%l,%c)[%P]
-# 	let g:nyan_modoki_select_cat_face_number = 4
-# 	let g:nayn_modoki_animation_enabled= 1
-# '''
 
 [[plugins]] #color
 repo = 'mhartington/oceanic-next'
