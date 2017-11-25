@@ -38,25 +38,13 @@ inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 
-" inoremap [ []<Left>
-" inoremap [<Enter> []<Left><CR><ESC><S-o>
-" inoremap { {}<Left>
-" inoremap {<Enter> {}<Left><CR><ESC><S-o>
-" inoremap ( ()<Left>
-" inoremap (<Enter> ()<Left><CR><ESC><S-o>
-" inoremap < <><Left>
-" inoremap <<Enter> <><Left><CR><ESC><S-o>
-" inoremap ' ''<Left>
-" inoremap " ""<Left>
-" inoremap '''<Enter> '''<Left><CR><ESC><S-o>
-
-nnoremap <silent> <Space>o   :<C-u>for i in range(1, v:count1) 
-			\\| call append(line('.'),   '') 
-			\\| endfor 
+nnoremap <silent> <Space>o   :<C-u>for i in range(1, v:count1)
+			\\| call append(line('.'),   '')
+			\\| endfor
 			\\| silent! call repeat#set("<Space>o", v:count1)<CR>
-nnoremap <silent> <Space>O   :<C-u>for i in range(1, v:count1) 
-			\\| call append(line('.')-1, '') 
-			\\| endfor 
+nnoremap <silent> <Space>O   :<C-u>for i in range(1, v:count1)
+			\\| call append(line('.')-1, '')
+			\\| endfor
 			\\| silent! call repeat#set("<Space>O", v:count1)<CR>
 
 "-----------------------------------
@@ -72,7 +60,7 @@ endif
 let &runtimepath = s:dein_repo_dir . "," . &runtimepath
 
 " ReadPlugins & MakeCaches
-let s:rc_dir = fnamemodify(expand('<sfile>'), ':h') 
+let s:rc_dir = fnamemodify(expand('<sfile>'), ':h')
 let s:toml      = s:rc_dir . '/dein.toml'
 let s:lazy_toml = s:rc_dir . '/dein_lazy.toml'
 if dein#load_state(s:dein_dir)
@@ -84,15 +72,16 @@ if dein#load_state(s:dein_dir)
 endif
 
 " InstallLuckPackage
-if has('vim_starting') 
+if has('vim_starting')
   if dein#check_install()
     call dein#install()
   endif
 endif
 
 filetype plugin indent on
+augroup FiletypeGroup
+    autocmd!
+    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
 
-"set background=dark
-"let g:hybrid_term_colors = 1
-"let g:hybrid_reduced_contrast = 1
 colorscheme OceanicNext

@@ -49,8 +49,10 @@ hook_add = '''
   let g:ale_echo_msg_warning_str = '⚠'
   let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
   let g:ale_linters = {
-        \'python': ['pylint']
-        \}
+    \'python': ['pylint'],
+    \'javascript': ['eslint'],
+    \'jsx': ['eslint']
+  \}
 '''
 
 [[plugins]]
