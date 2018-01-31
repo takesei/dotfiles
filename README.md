@@ -1,2 +1,2 @@
 # neovim
-Store any settings on neovim.
+Store settings about neovim.
