@@ -43,15 +43,19 @@ hook_add = '''
   nmap <silent> <C-f><C-w> <Plug>(ale_previous_wrap)
   let g:ale_open_list = 1
   let g:ale_list_window_size=8
-  let g:ale_keep_list_window_open = 0
+  let g:ale_keep_list_window_open = 1
   let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
   let g:ale_echo_msg_error_str = '⨉'
   let g:ale_echo_msg_warning_str = '⚠'
   let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_linter_aliases = {'vue': "css"}
   let g:ale_linters = {
     \'python': ['pylint'],
     \'javascript': ['eslint'],
-    \'jsx': ['eslint']
+    \'jsx': ['eslint'],
+    \ 'html': [],
+    \ 'css': ['stylelint'],
+    \ 'vue': ['eslint']
   \}
 '''
 

@@ -13,6 +13,10 @@ on_ft = 'python'
 # repo = 'JuliaEditorSupport/julia-vim'
 # on_ft = 'julia'
 
+[[plugins]] #vuejs syntax
+repo = 'posva/vim-vue'
+on_ft = 'vue'
+
 [[plugins]] #C# syntax
 repo = 'OmniSharp/omnisharp-vim'
 depends = 'vim-dispatch'
