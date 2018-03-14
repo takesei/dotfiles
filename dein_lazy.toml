@@ -17,6 +17,10 @@ on_ft = 'python'
 repo = 'posva/vim-vue'
 on_ft = 'vue'
 
+[[plugins]] #pug syntax
+repo = 'digitaltoad/vim-pug'
+on_ft = 'pug'
+
 [[plugins]] #C# syntax
 repo = 'OmniSharp/omnisharp-vim'
 depends = 'vim-dispatch'
