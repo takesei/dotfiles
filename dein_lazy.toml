@@ -9,7 +9,7 @@ on_ft = 'python'
 repo = 'zchee/deoplete-jedi'
 on_ft = 'python'
 
-# [[plugins]] #python syntax
+# [[plugins]] #julia syntax
 # repo = 'JuliaEditorSupport/julia-vim'
 # on_ft = 'julia'
 

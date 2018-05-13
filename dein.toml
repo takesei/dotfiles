@@ -137,9 +137,13 @@ repo = 'w0ng/vim-hybrid'
 [[plugins]] #color
 repo = 'jacoborus/tender.vim'
 
+# [[plugins]] #color
+# repo = 'https://github.com/miyakogi/seiya.vim'
+# hookadd = 'let g:seiya_auto_enable=1'
+
 [[plugins]] #file manager
 repo = 'justinmk/vim-dirvish'
-hook_add = 'nnoremap <silent> <Space>d :<C-u>Dirvish<CR>'
+hookadd = 'nnoremap <silent> <Space>d :<C-u>Dirvish<CR>'
 
 [[plugins]] #judge the fileptype in context
 repo = 'Shougo/context_filetype.vim'
