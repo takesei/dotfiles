@@ -1,6 +1,13 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+[[plugins]] #comment out
+repo = 'tyru/caw.vim'
+hook_add = '''
+  nmap <C-w> <Plug>(caw:hatpos:toggle)
+  vmap <C-w> <Plug>(caw:hatpos:toggle)
+'''
+
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 hook_post_update = '''
