@@ -47,3 +47,6 @@ repo = 'tomtom/tcomment_vim'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'mhartington/oceanic-next'
