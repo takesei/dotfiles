@@ -1,0 +1,51 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'soramugi/auto-ctags.vim'
+hook_add = '''
+    let g:auto_ctags = 1
+'''
+
+[[plugins]]
+repo = 't9md/vim-quickhl'
+hook_add = 'call config#vim_quickhl#hook_add()'
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+hook_add = 'call config#caw#hook_add()'
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = 'call config#ale#hook_add()'
+
+
+[[plugins]]
+repo =  'itchyny/lightline.vim'
+hook_add = 'call config#lightline#hook_add()'
+
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+hook_add = 'call config#lightline_ale#hook_add()'
+
+[[plugins]]
+repo = 'lambdalisue/gina.vim'
+  
+[[plugins]]
+repo = 'itchyny/vim-gitbranch'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+
+[[plugins]]
+repo = 'dracula/vim'

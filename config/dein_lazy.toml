@@ -1,0 +1,54 @@
+[[plugins]]
+repo = "Shougo/deoplete.nvim"
+on_event = "InsertEnter"
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_event = 'InsertEnter'
+
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+on_cmd = ['Denite']
+depends = ['vim-devicons']
+hook_add = 'call config#denite#hook_add()'
+hook_post_source = 'call config#denite#hook_post_source()'
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+on_cmd = ['TagbarToggle']
+hook_add = 'call config#tagbar#hook_add()'
+hook_source = 'call config#tagbar#hook_source()'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+on_cmd = ['Fern']
+depends = ['fern-renderer-devicons.vim']
+hook_add = 'call config#fern#hook_add()'
+hook_source = 'call config#fern#hook_source()'
+
+[[plugins]]
+repo = 'lambdalisue/fern-renderer-devicons.vim'
+depends = ['vim-devicons']
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_cmd = ['Denite']
+on_source = ['denite.nvim']
+
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_cmd = ['Denite']
+on_source = ['denite.nvim']
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+on_event = 'InsertEnter'
+merged = '0'
+hook_source = 'call config#coc#hook_source()'
