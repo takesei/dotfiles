@@ -48,6 +48,7 @@ set mouse=a
 set updatetime=250
 set autoindent
 set clipboard=unnamed
+set fileformats=unix,dos,mac
 
 " Search
 set showmatch
@@ -68,6 +69,8 @@ set completeopt-=preview
 " terminal mode
 autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
 
+" set tag
+set tags+=.git/tags
 
 if has('nvim')
   set pumblend=5

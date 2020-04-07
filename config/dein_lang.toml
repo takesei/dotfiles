@@ -22,4 +22,4 @@ on_ft = 'go'
 [[plugins]]
 repo = 'coil398/vim-go'
 on_ft = 'go'
-hook_source = 'call config#init#vim_go#hook_source()'
+hook_source = 'call config#vim_go#hook_source()'
