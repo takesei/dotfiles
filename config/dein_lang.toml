@@ -1,8 +1,4 @@
 [[plugins]]
-repo = 'deoplete-plugins/deoplete-jedi'
-on_ft = ['python']
-
-[[plugins]]
 repo = 'andviro/flake8-vim'
 on_ft = ['python']
 
@@ -23,3 +19,18 @@ on_ft = 'go'
 repo = 'coil398/vim-go'
 on_ft = 'go'
 hook_source = 'call config#vim_go#hook_source()'
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['ts', 'tsx']
+
+# [[plugins]]
+# repo = 'udalov/kotlin-vim'
+# on_ft = 'kotlin'
+
+# [[plugins]]
+# repo = 'JuliaEditorSupport/julia-vim'
+
+# [[plugins]]
+# repo = 'deoplete-plugins/deoplete-jedi'
+# on_ft = ['python']

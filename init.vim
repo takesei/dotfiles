@@ -16,11 +16,16 @@ source $XDG_CONFIG_HOME/nvim/auto.vim
 
 " General
 set number
-set ambiwidth=double
+
 set tabstop=2
 set expandtab
+set showtabline=2
 set shiftwidth=2
+set softtabstop=2
 set smartindent
+set autoindent
+
+set ambiwidth=double
 set list
 set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 set hidden
@@ -43,12 +48,13 @@ set autowrite
 set display=lastline
 set matchpairs& matchpairs+=<:>
 set matchtime=1
-set showtabline=2
 set mouse=a
-set updatetime=250
-set autoindent
+set updatetime=750
 set clipboard=unnamed
 set fileformats=unix,dos,mac
+set modifiable
+set verbosefile=/tmp/vim.log
+set verbose=20
 
 " Search
 set showmatch
@@ -68,10 +74,14 @@ set completeopt-=preview
 
 " terminal mode
 autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
+autocmd BufRead,BufNewFile *.jl set filetype=julia
 
 " set tag
-set tags+=.git/tags
+set tags+=.tags;$HOME
 
 if has('nvim')
   set pumblend=5
 endif
+
+set verbosefile=/tmp/vim.log
+set verbose=20

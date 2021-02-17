@@ -6,7 +6,7 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up> gk
-nnoremap <Leader><Leader> i<Space><Esc>
+nnorem ap <Leader><Leader> i<Space><Esc>
 
 " Insert new line
 nnoremap <silent> <Space>o   :<C-u>for i in range(1, v:count1)
@@ -22,8 +22,13 @@ nnoremap <silent> <Space>O   :<C-u>for i in range(1, v:count1)
 tnoremap <silent> <ESC> <C-\><C-n>
 
 " Denite
-nmap [denite] <Nop>
+nnoremap [denite] <Nop>
+nnoremap [coc] <Nop>
+nnoremap [defx] <Nop>
+
 map <Leader>u [denite]
+map <Leader>c [coc]
+" map <Leader>v [defx]
 
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort

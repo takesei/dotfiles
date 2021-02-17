@@ -5,12 +5,15 @@ repo = 'Shougo/dein.vim'
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
-repo = 'soramugi/auto-ctags.vim'
-hook_add = '''
-    let g:auto_ctags = 1
-    let g:auto_ctags_tags_name = 'tags'
-    let g:auto_ctags_directory_list = ['.git', '.svn']
-'''
+repo = 'lambdalisue/nerdfont.vim'
+
+# [[plugins]]
+# repo = 'soramugi/auto-ctags.vim'
+# hook_add = '''
+#     let g:auto_ctags = 0
+#     let g:auto_ctags_tags_name = 'tags'
+#     let g:auto_ctags_directory_list = ['.git', '.svn']
+# '''
 
 [[plugins]]
 repo = 't9md/vim-quickhl'
@@ -21,9 +24,8 @@ repo = 'tyru/caw.vim'
 hook_add = 'call config#caw#hook_add()'
 
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'dense-analysis/ale'
 hook_add = 'call config#ale#hook_add()'
-
 
 [[plugins]]
 repo =  'itchyny/lightline.vim'
@@ -31,6 +33,7 @@ hook_add = 'call config#lightline#hook_add()'
 
 [[plugins]]
 repo = 'maximbaz/lightline-ale'
+depends = ['lightline.vim']
 hook_add = 'call config#lightline_ale#hook_add()'
 
 [[plugins]]
@@ -51,3 +54,8 @@ repo = 'osyo-manga/vim-precious'
 
 [[plugins]]
 repo = 'dracula/vim'
+
+# Neovim Bug quick fixer
+[[plugins]]
+repo = 'antoinemadec/FixCursorHold.nvim'
+hook_add = 'call config#fixcursorhold#hook_add()'
