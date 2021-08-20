@@ -1,12 +1,12 @@
 " Set Python path
 let g:pyton3_host_prog = '/usr/local/opt/python@3.9/bin/python3.9'
+
 " Load dein.vim
 source $XDG_CONFIG_HOME/nvim/dein.vim
 
 " Colorscheme
 source $XDG_CONFIG_HOME/nvim/color.vim
 
-" Load the other setting files
 " Keymappkings
 source $XDG_CONFIG_HOME/nvim/keymappings.vim
 
@@ -16,11 +16,11 @@ source $XDG_CONFIG_HOME/nvim/auto.vim
 " General
 set number
 
-set tabstop=2
+set tabstop=4
 set expandtab
-set showtabline=2
-set shiftwidth=2
-set softtabstop=2
+set showtabline=4
+set shiftwidth=4
+set softtabstop=4
 set smartindent
 set autoindent
 
@@ -52,7 +52,7 @@ set updatetime=750
 set clipboard=unnamed
 set fileformats=unix,dos,mac
 set modifiable
-set verbosefile=/tmp/vim.log
+set verbosefile=$XDG_CACHE_HOME/temp/vim.log
 set verbose=20
 
 " Search
@@ -75,12 +75,6 @@ set completeopt-=preview
 autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
 autocmd BufRead,BufNewFile *.jl set filetype=julia
 
-" set tag
-set tags+=.tags;$HOME
-
 if has('nvim')
   set pumblend=5
 endif
-
-set verbosefile=/tmp/vim.log
-set verbose=20

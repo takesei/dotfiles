@@ -21,6 +21,7 @@ function! config#lightline#hook_add() abort
         \   'battery': 'LightLineBattery',
         \   'cocstatus': 'coc#status',
         \   'currentfunction': 'CocCurrentFunction',
+        \   'gitbranch': 'gitbranch#name'
         \ }
 
   let g:lightline.separator = {

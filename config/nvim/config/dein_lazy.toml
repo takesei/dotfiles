@@ -13,48 +13,13 @@ depends = ['vim-devicons']
 hook_add = 'call config#denite#hook_add()'
 hook_post_source = 'call config#denite#hook_post_source()'
 
-# [[plugins]]
-# repo = 'majutsushi/tagbar'
-# on_cmd = ['TagbarToggle']
-# hook_add = 'call config#tagbar#hook_add()'
-# hook_source = 'call config#tagbar#hook_source()'
-
-
-# [[plugins]]
-# repo = 'lambdalisue/fern.vim'
-# on_cmd = ['Fern']
-# depends = ['fern-renderer-nerdfont.vim']
-# hook_add = 'call config#fern#hook_add()'
-# hook_source = 'call config#fern#hook_source()'
-# 
-# [[plugins]]
-# repo = 'lambdalisue/fern-renderer-nerdfont.vim'
-
-[[plugins]]
-repo = 'Shougo/defx.nvim'
-on_cmd = ['Defx']
-hook_add = 'call config#defx#hook_add()'
-hook_source = 'call config#defx#hook_source()'
-depends = ['defx-icons', 'defx-git']
-
-[[plugins]]
-repo = 'kristijanhusak/defx-icons'
-depends = ['vim-devicons']
-
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
-
 [[plugins]]
 repo = 'roxma/nvim-yarp'
-
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
 
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
 on_cmd = ['Denite']
 on_source = ['denite.nvim']
-
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
