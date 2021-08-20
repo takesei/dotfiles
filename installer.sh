@@ -25,6 +25,7 @@ conf_neovim() {
     command curl $installer > $dir_cache/install.sh
     command sh $dir_cache/install.sh $XDG_CACHE_HOME/dein
     command ln -snf $dotroot/config/nvim $HOME/.config/nvim
+    command mkdir -p $XDG_CACHE_HOME/temp
 }
 
 conf_tmux() {
@@ -46,6 +47,10 @@ conf_personal_dir() {
     fi
 }
 
+conf_zsh() {
+    command ln -snf $dotroot/zshrc $HOME/.zshrc
+}
+
 # Create Cache Directory
 if [ ! -d $dir_cache ]; then
     command mkdir -p $dir_cache
@@ -62,6 +67,7 @@ fi
 # Configure
 conf_personal_dir
 conf_neovim
+conf_tmux
 conf_git
 
 command echo "Instalattion Completed! Have fun!!"
