@@ -1,6 +1,5 @@
 " Set Python path
-let g:pyton3_host_prog = '/Users/takesei/.pyenv/versions/3.8.0/bin/python'
-
+let g:pyton3_host_prog = '/usr/local/opt/python@3.9/bin/python3.9'
 " Load dein.vim
 source $XDG_CONFIG_HOME/nvim/dein.vim
 
