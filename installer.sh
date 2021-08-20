@@ -7,7 +7,7 @@ export state=0
 export dir_cache
 
 # Clone repository
-git clone $repository $dotroot
+# git clone $repository $dotroot
 source $dotroot/zshrc
 
 dir_cache=$XDG_CACHE_HOME/dotfiles
@@ -25,7 +25,6 @@ conf_neovim() {
     command curl $installer > $dir_cache/install.sh
     command sh $dir_cache/install.sh $XDG_CACHE_HOME/dein
     command ln -snf $dotroot/config/nvim $HOME/.config/nvim
-    command mkdir -p $XDG_CACHE_HOME/temp
 }
 
 conf_tmux() {
@@ -69,5 +68,7 @@ conf_personal_dir
 conf_neovim
 conf_tmux
 conf_git
+conf_zsh
 
-command echo "Instalattion Completed! Have fun!!"
+command echo "Instalattion Completed! Type 'exec $SHELL -l' to start."
+command echo "Have fun!!"

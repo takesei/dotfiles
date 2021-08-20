@@ -33,6 +33,7 @@ if dein#load_state(s:dein_cache_dir)
 endif
 
 filetype plugin indent on
+syntax enable
 
 if dein#check_install()
   call dein#install()

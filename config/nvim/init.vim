@@ -52,7 +52,7 @@ set updatetime=750
 set clipboard=unnamed
 set fileformats=unix,dos,mac
 set modifiable
-set verbosefile=$XDG_CACHE_HOME/temp/vim.log
+set verbosefile=/tmp/vim.log
 set verbose=20
 
 " Search

@@ -38,7 +38,7 @@ function select-history() {
 }
 
 
-if [ "$(uname)" == 'Darwin' ]; then
+if [ "$(uname)" = "Darwin" ]; then
     zle -N select-history
     bindkey '^r' select-history
 fi

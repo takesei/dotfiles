@@ -2,6 +2,12 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'SpaceVim/SpaceVim'
+
 # Layout
 ## Icons
 [[plugins]]
@@ -19,9 +25,6 @@ hook_add = 'call config#lightline#hook_add()'
 repo = 'maximbaz/lightline-ale'
 depends = ['lightline.vim']
 hook_add = 'call config#lightline_ale#hook_add()'
-
-[[plugins]]
-repo = 'itchyny/vim-gitbranch'
 
 ## Filer
 [[plugins]]
