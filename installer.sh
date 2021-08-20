@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -ue
 
-local repository="https://github.com/takesei/dotfiles"
-local dotroot=$HOME/dotfiles
-local state=0
-local dir_cache
+export repository="https://github.com/takesei/dotfiles"
+export dotroot=$HOME/dotfiles
+export state=0
+export dir_cache
 
 # Clone repository
 git clone $repository $dotroot
