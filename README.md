@@ -2,6 +2,8 @@
 
 ## Requirements
 - git
+- fzf
+- zsh
 
 ## Configuration you'll get
 - neovim

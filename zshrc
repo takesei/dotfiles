@@ -37,5 +37,8 @@ function select-history() {
   CURSOR=$#BUFFER
 }
 
-zle -N select-history
-bindkey '^r' select-history
+
+if [ "$(uname)" == 'Darwin' ]; then
+    zle -N select-history
+    bindkey '^r' select-history
+fi
