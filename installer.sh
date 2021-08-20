@@ -60,6 +60,7 @@ else
 fi
 
 # Configure
+conf_personal_dir
 conf_neovim
 conf_git
 
