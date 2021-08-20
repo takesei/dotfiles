@@ -4,4 +4,4 @@ build:
 
 .PHONY: run
 run:
-	@docker run -i -t dotfiles-ubuntu bash
+	@docker run -i -t -v `pwd`:/root/dotfiles dotfiles-ubuntu
