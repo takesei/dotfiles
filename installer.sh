@@ -35,6 +35,10 @@ conf_tmux() {
 conf_personal_dir() {
     command mkdir -p $GIT_REPO_ROOT
     command mkdir -p $TEMP_ROOT
+    command mkdir -p $XDG_CACHE_HOME
+    command mkdir -p $XDG_DATA_HOME
+    command mkdir -p $XDG_STATE_HOME
+    command mkdir -p $XDG_CONFIG_HOME
     command ln -snf $dotroot/bin $BIN_ROOT
 
     if [ -d $HOME/Desktop ]; then
