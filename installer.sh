@@ -23,7 +23,7 @@ conf_neovim() {
 
     command echo "Configure Neovim"
     command curl $installer > $dir_cache/install.sh
-    command sh $dir_cache/install.sh
+    command sh $dir_cache/install.sh $XDG_CACHE_HOME/dein
     command ln -snf $dotroot/config/nvim $HOME/.config/nvim
 }
 
