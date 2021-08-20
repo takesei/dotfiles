@@ -7,7 +7,7 @@ export state=0
 export dir_cache
 
 # Clone repository
-# git clone $repository $dotroot
+git clone $repository $dotroot
 source $dotroot/zshrc
 
 dir_cache=$XDG_CACHE_HOME/dotfiles
