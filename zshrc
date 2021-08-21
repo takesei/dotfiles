@@ -5,12 +5,22 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
+export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship.toml
+export STARSHIP_CACHE=$XDG_CACHE_HOME/starship
 
 export GIT_REPO_ROOT=$HOME/Develop/github.com
 export TEMP_ROOT=$HOME/Develop/temp
 export BIN_ROOT=$HOME/Develop/bin
 
 export PATH=$BIN_ROOT:$PATH
+
+# Package Settings
+if [ -x "$(command -v starship)" ]; then
+    eval "$(starship init zsh)"
+else
+    echo "StarShip is not installed"
+    echo "See Also: https://starship.rs"
+fi
 
 # Alias
 alias rl="exec $SHELL -l"

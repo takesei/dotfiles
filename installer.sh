@@ -5,9 +5,23 @@ export repository="https://github.com/takesei/dotfiles"
 export dotroot=$HOME/dotfiles
 export state=0
 export dir_cache
+export OS
+
+if [ "$(uname)" == 'Darwin' ]; then
+  OS='Mac'
+elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+  OS='Linux'
+else
+  echo "Your platform ($(uname -a)) is not supported."
+  exit 1
+fi
+
+echo "Set the system with [$OS]"
 
 # Clone repository
-git clone $repository $dotroot
+if [ ! -d $HOME/dotfiles ]; then
+    git clone $repository $dotroot
+fi
 source $dotroot/zshrc
 
 dir_cache=$XDG_CACHE_HOME/dotfiles
@@ -42,12 +56,22 @@ conf_personal_dir() {
     command ln -snf $dotroot/bin $BIN_ROOT
 
     if [ -d $HOME/Desktop ]; then
-        ln -snf $TEMP_ROOT $HOME/Desktop/temp
+        command ln -snf $TEMP_ROOT $HOME/Desktop/temp
     fi
 }
 
 conf_zsh() {
     command ln -snf $dotroot/zshrc $HOME/.zshrc
+}
+
+conf_starship() {
+    if [ $OS = 'MAC' ]; then
+        command brew install starship
+    elif [ $OS = 'Linux' ]; then
+        command sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y
+    fi
+
+    command ln -snf $dotroot/config/starship.toml $HOME/.config/starship.toml
 }
 
 # Create Cache Directory
@@ -68,6 +92,7 @@ conf_personal_dir
 conf_neovim
 conf_tmux
 conf_git
+conf_starship
 conf_zsh
 
 command echo "Instalattion Completed! Type 'exec $SHELL -l' to start."
