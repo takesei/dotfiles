@@ -1,3 +1,7 @@
+# Starship Configure File
+# Author: takesei<sei06k14@gmail.com>
+# Date: 2021/08/21
+
 add_newline = true
 
 [character]

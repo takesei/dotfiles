@@ -36,8 +36,12 @@ conf_neovim() {
     local installer="https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh"
 
     command echo "Configure Neovim"
-    command curl $installer > $dir_cache/install.sh
-    command sh $dir_cache/install.sh $XDG_CACHE_HOME/dein
+
+    if [ ! -f $dir_cache/install_dein.sh ]; then
+        command curl $installer > $dir_cache/install_dein.sh
+        command sh $dir_cache/install_dein.sh $XDG_CACHE_HOME/dein
+    fi
+
     command ln -snf $dotroot/config/nvim $HOME/.config/nvim
 }
 
@@ -46,7 +50,23 @@ conf_tmux() {
     command ln -snf $dotroot/tmux.conf $HOME/.tmux.conf
 }
 
+conf_nerdfont() {
+    command echo "Configure NerdFont"
+    if [ $OS = 'Mac' ]; then
+        command brew tap homebrew/cask-fonts
+        command brew install --cask font-hack-nerd-font
+    elif [ $OS = 'Linux' ]; then
+        local installer="https://github.com/ryanoasis/nerd-fonts"
+        if [ ! -d $XDG_CACHE_HOME/fonts/nerd-fonts ]; then
+            echo "NERD FONT NOT FOUND"
+            command git clone $installer $XDG_CACHE_HOME/fonts/nerd-fonts
+            command sudo $XDG_CACHE_HOME/fonts/nerd-fonts/install.sh
+        fi
+    fi
+}
+
 conf_personal_dir() {
+    command echo "Configure Personal directory Structure"
     command mkdir -p $GIT_REPO_ROOT
     command mkdir -p $TEMP_ROOT
     command mkdir -p $XDG_CACHE_HOME
@@ -60,18 +80,23 @@ conf_personal_dir() {
     fi
 }
 
-conf_zsh() {
-    command ln -snf $dotroot/zshrc $HOME/.zshrc
-}
-
 conf_starship() {
-    if [ $OS = 'MAC' ]; then
-        command brew install starship
-    elif [ $OS = 'Linux' ]; then
-        command sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y
+    command echo "Configure StarShip"
+
+    if [ ! -x "$(command -v starship)" ]; then
+        if [ $OS = 'Mac' ]; then
+            command brew install starship
+        elif [ $OS = 'Linux' ]; then
+            command sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y
+        fi
     fi
 
     command ln -snf $dotroot/config/starship.toml $HOME/.config/starship.toml
+}
+
+conf_zsh() {
+    command echo "Configure Zsh"
+    command ln -snf $dotroot/zshrc $HOME/.zshrc
 }
 
 # Create Cache Directory
@@ -89,6 +114,7 @@ fi
 
 # Configure
 conf_personal_dir
+conf_nerdfont
 conf_neovim
 conf_tmux
 conf_git

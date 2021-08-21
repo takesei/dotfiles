@@ -16,7 +16,12 @@ export PATH=$BIN_ROOT:$PATH
 
 # Package Settings
 if [ -x "$(command -v starship)" ]; then
-    eval "$(starship init zsh)"
+    case $0 in
+        "bash" ) eval "$(starship init bash)" ;;
+        "zsh" ) eval "$(starship init zsh)" ;;
+        "fish" ) eval starship init fish | source ;;
+        * ) echo "shell [$0] is not supported" ;;
+    esac
 else
     echo "StarShip is not installed"
     echo "See Also: https://starship.rs"
