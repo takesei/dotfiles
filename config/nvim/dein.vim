@@ -39,3 +39,4 @@ if dein#check_install()
   call dein#install()
 endif
 " ---------- End Dein Script ----------
+" :call dein#recache_runtimepath()

@@ -2,6 +2,7 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+
 # System
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
@@ -10,20 +11,49 @@ build = 'make'
 [[plugins]]
 repo = 'roxma/nvim-yarp'
 
+
 # Colorscheme
 [[plugins]]
 repo = 'dracula/vim'
+
+
+# Nerdfont
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+
 
 # StatusLine
 [[plugins]]
 repo =  'itchyny/lightline.vim'
 hook_add = 'call config#lightline#hook_add()'
 
-# [[plugins]]
-# repo = 'maximbaz/lightline-ale'
-# depends = ['lightline.vim']
-# hook_add = 'call config#lightline_ale#hook_add()'
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+hook_add = 'call config#lightline#ale_hook_add()'
 
-# [[plugins]]
-# repo = 'dense-analysis/ale'
-# hook_add = 'call config#ale#hook_add()'
+
+# Lint Engine
+[[plugins]]
+repo = 'dense-analysis/ale'
+hook_add = 'call config#ale#hook_add()'
+
+# Interactive Filetype Setter
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+hook_add = 'call config#caw#hook_add()'
+
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'SpaceVim/SpaceVim'
+
+# Git
+[[plugins]]
+repo = 'airblade/vim-gitgutter'

@@ -24,7 +24,6 @@ set softtabstop=4
 set smartindent
 set autoindent
 
-set ambiwidth=double
 set list
 set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 set hidden
@@ -48,7 +47,7 @@ set display=lastline
 set matchpairs& matchpairs+=<:>
 set matchtime=1
 set mouse=a
-set updatetime=750
+set updatetime=250
 set clipboard=unnamed
 set fileformats=unix,dos,mac
 set modifiable

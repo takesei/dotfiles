@@ -6,13 +6,6 @@
       "filetypes": ["c", "cpp", "objc", "objcpp"]
     },
 
-    "kotlin":{
-      "command": "/Users/takesei/.cache/git/kotlin-language-server/server/build/install/server/bin/server",
-      "filetypes": ["kotlin"],
-      "rootPatterns": [".kt", ".kts"],
-      "additionalSchemes": ["jar", "zipfile"]
-    },
-
     "golang": {
       "command": "gopls",
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],

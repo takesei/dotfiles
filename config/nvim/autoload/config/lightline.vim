@@ -1,9 +1,6 @@
 function! config#lightline#hook_add() abort
     set noshowmode
 
-    "let g:webdevicons_enable_airline_statusline = 1
-    "let g:webdevicons_enable_airline_tabline = 1
-
     let g:lightline = {}
     let g:lightline.colorscheme = 'jellybeans'
     let g:lightline.active = {
@@ -12,10 +9,11 @@ function! config#lightline#hook_add() abort
     \       ['gitbranch', 'readonly', 'filename', 'modified'],
     \   ],
     \   'right': [
+    \       ['ale_checking', 'ale_errors', 'ale_warnings', 'ale_infos', 'ale_ok'],
     \       ['lineinfo'],
-    \       ['percent', 'ale'],
+    \       ['percent'],
     \       ['cocstatus', 'currentfunction'],
-    \       ['fileformat', 'fileencoding', 'filetype'],
+    \       ['fileformat', 'fileencoding', 'devicon', 'filetype'],
     \   ]
     \}
 
@@ -28,15 +26,36 @@ function! config#lightline#hook_add() abort
     \   'gitbranch': 'GITDUMMY',
     \   'battery': 'BATTERYY',
     \   'cocstatus': 'COCDUMMY',
-    \   'currentfunction': 'COCFUNCDUMMY'
+    \   'currentfunction': 'COCFUNCDUMMY',
     \}
 
     let g:lightline.component_function = {
     \   'time': 'LightLineTime',
+    \   'devicon': 'GetDevicon',
+    \}
+
+    let g:lightline.component_expand = {
+    \   'ale_checking': 'lightline#ale#checking',
+    \   'ale_infos': 'lightline#ale#infos',
+    \   'ale_warnings': 'lightline#ale#warnings',
+    \   'ale_errors': 'lightline#ale#errors',
+    \   'ale_ok': 'lightline#ale#ok',
+    \}
+
+    let g:lightline.component_type = {
+    \   'ale_checking': 'right',
+    \   'ale_infos': 'right',
+    \   'ale_warnings': 'warning',
+    \   'ale_errors': 'error',
+    \   'ale_ok': 'right'
     \}
   
     function! CocCurrentFunction()
       return get(b:, 'coc_current_function', '')
+    endfunction
+
+    function! GetDevicon()
+        return nerdfont#find()
     endfunction
   
     augroup LightLineOnALE
@@ -57,4 +76,13 @@ function! config#lightline#hook_add() abort
             \ battery >= 0  ? ' ' : ''
       return printf('%d%% %s', battery, batteryIcon)
     endfunction
+endfunction
+
+
+function! config#lightline#ale_hook_add() abort
+    let g:lightline#ale#indicator_checking = "\uf110 "
+    let g:lightline#ale#indicator_infos = "\uf129 "
+    let g:lightline#ale#indicator_warnings = "\uf071 "
+    let g:lightline#ale#indicator_errors = "\uf05e "
+    let g:lightline#ale#indicator_ok = "\uf00c "
 endfunction
