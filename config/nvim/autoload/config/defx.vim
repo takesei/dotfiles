@@ -3,29 +3,31 @@ function! config#defx#hook_add() abort
 endfunction
 
 function! config#defx#hook_source() abort
+  let g:defx_icons_column_length = 2
   autocmd BufWritePost * call defx#redraw()
   autocmd BufEnter * call defx#redraw()
+
   call defx#custom#column('git', 'indicators', {
-  \ 'Modified'  : '✹',
-  \ 'Staged'    : '✚',
-  \ 'Untracked' : '✭',
-  \ 'Renamed'   : '➜',
-  \ 'Unmerged'  : '═',
-  \ 'Ignored'   : '☒',
-  \ 'Deleted'   : '✖',
-  \ 'Unknown'   : '?'
+    \ 'Modified'  : '✹',
+    \ 'Staged'    : '✚',
+    \ 'Untracked' : '✭',
+    \ 'Renamed'   : '➜',
+    \ 'Unmerged'  : '═',
+    \ 'Ignored'   : '☒',
+    \ 'Deleted'   : '✖',
+    \ 'Unknown'   : '?'
   \ })
+  call defx#custom#column('git', 'column_length', 2)
   call defx#custom#option('_', {
-      \ 'winwidth': 40,
-      \ 'split': 'vertical',
-      \ 'direction': 'topleft',
-      \ 'show_ignored_files': 1,
-      \ 'buffer_name': 'exlorer',
-      \ 'toggle': 1,
-      \ 'resume': 1,
-      \ 'columns': 'indent:git:icons:filename:mark',
-      "\ 'columns': 'indent:icons:filename:mark',
-      \ })
+    \ 'winwidth': 40,
+    \ 'split': 'vertical',
+    \ 'direction': 'topleft',
+    \ 'show_ignored_files': 1,
+    \ 'buffer_name': 'exlorer',
+    \ 'toggle': 1,
+    \ 'resume': 1,
+    \ 'columns': 'indent:git:icons:filename:mark',
+  \ })
 endfunction
 
 function! config#defx#settings() abort
@@ -59,7 +61,7 @@ function! config#defx#settings() abort
   \ defx#do_action('new_multiple_files')
   nnoremap <silent><buffer><expr> C
   \ defx#do_action('toggle_columns',
-  \                'mark:indent:icon:filename:type:size:time')
+  \                'indent:git:icons:filename:mark:type:size:time')
   nnoremap <silent><buffer><expr> S
   \ defx#do_action('toggle_sort', 'time')
   nnoremap <silent><buffer><expr> d

@@ -1,5 +1,5 @@
 " Set Python path
-let g:pyton3_host_prog = '/usr/local/opt/python@3.9/bin/python3.9'
+" let g:pyton2_host_prog = '/usr/local/opt/python@3.9/bin/python3.9'
 
 " Load dein.vim
 source $XDG_CONFIG_HOME/nvim/dein.vim
@@ -53,7 +53,7 @@ set clipboard=unnamed
 set fileformats=unix,dos,mac
 set modifiable
 set verbosefile=/tmp/vim.log
-set verbose=20
+set verbose=1
 
 " Search
 set showmatch
@@ -70,10 +70,6 @@ set foldcolumn=1
 
 " disable preview window
 set completeopt-=preview
-
-" terminal mode
-autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
-autocmd BufRead,BufNewFile *.jl set filetype=julia
 
 if has('nvim')
   set pumblend=5

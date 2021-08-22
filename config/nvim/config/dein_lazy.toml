@@ -1,34 +1,70 @@
-[[plugins]]
-repo = "Shougo/deoplete.nvim"
-on_event = "InsertEnter"
-
-[[plugins]]
-repo = 'cohama/lexima.vim'
-on_event = 'InsertEnter'
-
+# Denite
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-on_cmd = ['Denite']
-depends = ['vim-devicons']
 hook_add = 'call config#denite#hook_add()'
+hook_source = 'call config#denite#hook_source()'
 hook_post_source = 'call config#denite#hook_post_source()'
-
-[[plugins]]
-repo = 'roxma/nvim-yarp'
+depends = ['neoyank.vim', 'neomru.vim']
 
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
-on_cmd = ['Denite']
-on_source = ['denite.nvim']
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
-on_cmd = ['Denite']
-on_source = ['denite.nvim']
+
+# File Explorer
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hook_add = 'call config#defx#hook_add()'
+hook_source = 'call config#defx#hook_source()'
+depends = ['defx-icons', 'defx-git']
 
 [[plugins]]
-repo = 'neoclide/coc.nvim'
-rev = 'release'
-on_event = 'InsertEnter'
-merged = '0'
-hook_source = 'call config#coc#hook_source()'
+repo = 'kristijanhusak/defx-icons'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+
+# Interactive Filetype Setter
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+
+# Dein Update Plugins
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'SpaceVim/SpaceVim'
+
+# # Others
+# ## Git
+# [[plugins]]
+# repo = 'lambdalisue/gina.vim'
+
+# [[plugins]]
+# repo = 'airblade/vim-gitgutter'
+
+# ## Input Support
+# [[plugins]]
+# repo = 'tyru/caw.vim'
+# hook_add = 'call config#caw#hook_add()'
+
+# [[plugins]]
+# repo = "Shougo/deoplete.nvim"
+# on_event = "InsertEnter"
+
+# [[plugins]]
+# repo = 'cohama/lexima.vim'
+# on_event = 'InsertEnter'
+
+
+# [[plugins]]
+# repo = 'neoclide/coc.nvim'
+# rev = 'release'
+# on_event = 'InsertEnter'
+# merged = '0'
+# hook_source = 'call config#coc#hook_source()'

@@ -2,73 +2,28 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]]
-repo = 'wsdjeg/dein-ui.vim'
-
-[[plugins]]
-repo = 'SpaceVim/SpaceVim'
-
-# Layout
-## Icons
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-
-[[plugins]]
-repo = 'lambdalisue/nerdfont.vim'
-
-## Status Bar
-[[plugins]]
-repo =  'itchyny/lightline.vim'
-hook_add = 'call config#lightline#hook_add()'
-
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
-depends = ['lightline.vim']
-hook_add = 'call config#lightline_ale#hook_add()'
-
-## Filer
-[[plugins]]
-repo = 'Shougo/defx.nvim'
-on_cmd = ['Defx']
-hook_add = 'call config#defx#hook_add()'
-hook_source = 'call config#defx#hook_source()'
-depends = ['defx-icons', 'defx-git']
-
-[[plugins]]
-repo = 'kristijanhusak/defx-icons'
-depends = ['vim-devicons']
-
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
-
-# Others
-## Git
-[[plugins]]
-repo = 'lambdalisue/gina.vim'
-
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-
-## Input Support
-[[plugins]]
-repo = 'tyru/caw.vim'
-hook_add = 'call config#caw#hook_add()'
-
-## System
+# System
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 
 [[plugins]]
-repo = 'Shougo/context_filetype.vim'
+repo = 'roxma/nvim-yarp'
 
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-
-[[plugins]]
-repo = 'dense-analysis/ale'
-hook_add = 'call config#ale#hook_add()'
-
-## Colorscheme
+# Colorscheme
 [[plugins]]
 repo = 'dracula/vim'
+
+# StatusLine
+[[plugins]]
+repo =  'itchyny/lightline.vim'
+hook_add = 'call config#lightline#hook_add()'
+
+# [[plugins]]
+# repo = 'maximbaz/lightline-ale'
+# depends = ['lightline.vim']
+# hook_add = 'call config#lightline_ale#hook_add()'
+
+# [[plugins]]
+# repo = 'dense-analysis/ale'
+# hook_add = 'call config#ale#hook_add()'
