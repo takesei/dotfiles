@@ -4,7 +4,7 @@ repo = 'Shougo/denite.nvim'
 hook_add = 'call config#denite#hook_add()'
 hook_source = 'call config#denite#hook_source()'
 hook_post_source = 'call config#denite#hook_post_source()'
-depends = ['neoyank', 'neomru']
+depends = ['neoyank.vim', 'neomru.vim']
 
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
