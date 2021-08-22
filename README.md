@@ -4,6 +4,7 @@
 - git
 - fzf
 - zsh
+- riggrep
 
 ## Configuration you'll get
 - neovim

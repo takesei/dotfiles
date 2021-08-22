@@ -8,8 +8,8 @@ build-test: build
 
 .PHONY: run
 run:
-	@docker run -i -t -v `pwd`:/root/dotfiles dotfiles-ubuntu
+	@docker run --rm -i -t -v `pwd`:/root/dotfiles dotfiles-ubuntu
 
 .PHONY: run-test
 run-test:
-	@docker run -i -t dotfiles
+	@docker run --rm -i -t dotfiles
