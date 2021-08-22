@@ -42,6 +42,9 @@ conf_neovim() {
         command sh $dir_cache/install_dein.sh $XDG_CACHE_HOME/dein
     fi
 
+    command yarn global add neovim
+    command pip install --user neovim
+
     command ln -snf $dotroot/config/nvim $HOME/.config/nvim
 }
 
@@ -53,8 +56,11 @@ conf_tmux() {
 conf_nerdfont() {
     command echo "Configure NerdFont"
     if [ $OS = 'Mac' ]; then
-        command brew tap homebrew/cask-fonts
-        command brew install --cask font-hack-nerd-font
+        if [ `command brew list | grep nerd | wc -l` -eq 0 ]; then
+            echo "NERD FONT NOT FOUND"
+            command brew tap homebrew/cask-fonts
+            command brew install --cask font-hack-nerd-font
+        fi
     elif [ $OS = 'Linux' ]; then
         local installer="https://github.com/ryanoasis/nerd-fonts"
         if [ ! -d $XDG_CACHE_HOME/fonts/nerd-fonts ]; then
