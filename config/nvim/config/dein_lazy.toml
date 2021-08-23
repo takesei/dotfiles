@@ -12,6 +12,7 @@ repo = 'Shougo/neoyank.vim'
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
+
 # File Explorer
 [[plugins]]
 repo = 'Shougo/defx.nvim'
@@ -30,10 +31,10 @@ repo = 'kristijanhusak/defx-git'
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_event = 'InsertEnter'
- 
-# [[plugins]]
-# repo = 'neoclide/coc.nvim'
-# rev = 'release'
-# on_event = 'InsertEnter'
-# merged = '0'
-# hook_source = 'call config#coc#hook_source()'
+
+
+# Updater
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+on_cmd = ['DeinUpdate']
+depends = ['dein.vim']

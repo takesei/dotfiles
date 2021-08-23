@@ -11,6 +11,9 @@ build = 'make'
 [[plugins]]
 repo = 'roxma/nvim-yarp'
 
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
 
 # Colorscheme
 [[plugins]]
@@ -32,27 +35,23 @@ repo = 'maximbaz/lightline-ale'
 hook_add = 'call config#lightline#ale_hook_add()'
 
 
+# LSP
+# [[plugins]]
+# repo = 'neoclide/coc.nvim'
+# rev = 'release'
+# on_event = 'InsertEnter'
+# merged = '0'
+# hook_source = 'call config#coc#hook_source()'
+
 # Lint Engine
 [[plugins]]
 repo = 'dense-analysis/ale'
 hook_add = 'call config#ale#hook_add()'
 
-# Interactive Filetype Setter
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
 [[plugins]]
 repo = 'tyru/caw.vim'
 hook_add = 'call config#caw#hook_add()'
 
-[[plugins]]
-repo = 'wsdjeg/dein-ui.vim'
-
-[[plugins]]
-repo = 'SpaceVim/SpaceVim'
 
 # Git
 [[plugins]]

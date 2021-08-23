@@ -34,6 +34,7 @@ set backspace=indent,eol,start
 set wildmenu
 set fenc=utf-8
 set nobackup
+set nowritebackup
 set noswapfile
 set autoread
 set showcmd
@@ -51,6 +52,7 @@ set updatetime=250
 set clipboard=unnamed
 set fileformats=unix,dos,mac
 set modifiable
+set modelines=0
 set verbosefile=/tmp/vim.log
 set verbose=1
 
