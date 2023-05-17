@@ -5,6 +5,10 @@
 - fzf
 - zsh
 - riggrep
+- neovim
+- node
+- yarn
+- pip
 
 ## Configuration you'll get
 - neovim
@@ -14,6 +18,7 @@
   - commit template
 - zsh
   - zshrc
+
 
 ## How to Install
 Run Script below
