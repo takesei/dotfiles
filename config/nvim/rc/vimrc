@@ -65,6 +65,8 @@ endif
 execute 'source' '<sfile>'->expand()->fnamemodify(':h') . "/dein.vim"
 
 "---------------------------------------------------------------------------
+colorscheme dracula
+
 
 if !empty(argv())
   call vimrc#on_filetype()

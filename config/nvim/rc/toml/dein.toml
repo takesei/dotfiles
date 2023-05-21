@@ -23,3 +23,7 @@ repo = 'Vimjas/vim-python-pep8-indent'
 
 [[plugins]]
 repo = 'rbtnn/vim-vimscript_indentexpr'
+
+# colorscheme
+[[plugins]]
+repo = 'dracula/vim'
