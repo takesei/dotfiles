@@ -60,4 +60,4 @@ if [ "$(uname)" = "Darwin" ]; then
     bindkey '^r' select-history
 fi
 
-source .personal_zshrc
+source $HOME/.personal_zshrc
