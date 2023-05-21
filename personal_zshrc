@@ -1,0 +1,36 @@
+export FPATH=$HOME/.zsh/completions:$FPATH
+export DOCKER_DEFAULT_PLATFORM=linux/arm64
+
+# Homebrew Activate
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+if type brew &>/dev/null; then
+    export FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+    zstyle ':completion:*:*:make:*' tag-order 'targets'
+    autoload -Uz compinit
+    compinit
+fi
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+export OPENBLAS=$(brew --prefix openblas)
+export CFLAGS="-falign-functions=8 ${CFLAGS}"
+export LDFLAGS="-L/opt/homebrew/opt/openblas/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openblas/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+
+export GOENV_ROOT=$HOME/.goenv
+export PATH=$GOENV_ROOT/bin:$PATH
+eval "$(goenv init -)"
+
+export CARGO_HOME="$HOME/.cargo"
+export PATH="$CARGO_HOME/bin:$PATH"

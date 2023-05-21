@@ -103,6 +103,7 @@ conf_starship() {
 conf_zsh() {
     command echo "Configure Zsh"
     command ln -snf $dotroot/zshrc $HOME/.zshrc
+    command ln -snf $dotroot/personal_zshrc $HOME/.personal_zshrc
 }
 
 # Create Cache Directory

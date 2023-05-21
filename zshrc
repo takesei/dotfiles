@@ -32,7 +32,7 @@ fi
 # Alias
 alias rl="exec $SHELL -l"
 alias vi="nvim"
-alias vim="nvim"
+alias ls="ls --color=auto"
 
 # Custom Functions
 function memo() {
@@ -59,3 +59,5 @@ if [ "$(uname)" = "Darwin" ]; then
     zle -N select-history
     bindkey '^r' select-history
 fi
+
+source .personal_zshrc
