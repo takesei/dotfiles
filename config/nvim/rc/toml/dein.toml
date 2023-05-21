@@ -1,0 +1,25 @@
+hooks_file = '$BASE_DIR/conf/deinft.vim'
+
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'vim-jp/autofmt'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+[[plugins]]
+repo = 'vim-jp/syntax-vim-ex'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'Vimjas/vim-python-pep8-indent'
+
+[[plugins]]
+repo = 'rbtnn/vim-vimscript_indentexpr'

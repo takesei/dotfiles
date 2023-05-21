@@ -2,7 +2,6 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-
 # System
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
@@ -36,12 +35,12 @@ hook_add = 'call config#lightline#ale_hook_add()'
 
 
 # LSP
-# [[plugins]]
-# repo = 'neoclide/coc.nvim'
-# rev = 'release'
-# on_event = 'InsertEnter'
-# merged = '0'
-# hook_source = 'call config#coc#hook_source()'
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+on_event = 'InsertEnter'
+merged = '0'
+hook_source = 'call config#coc#hook_source()'
 
 # Lint Engine
 [[plugins]]

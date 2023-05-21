@@ -19,7 +19,7 @@
 # on_ft = ['toml']
 
 ## Markdown
-# [[plugins]]
-# repo = 'iamcco/markdown-preview.nvim'
-# on_ft = ['markdown','mkd']
-# build = 'sh -c "cd app & yarn install"'
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown','mkd']
+build = 'sh -c "cd app & yarn install"'
