@@ -46,6 +46,7 @@ conf_neovim() {
     command pip install --user neovim
 
     command ln -snf $dotroot/config/nvim $HOME/.config/nvim
+    command ln -snf $dotroot/personal_vimrc $HOME/.personal_vimrc
 }
 
 conf_tmux() {

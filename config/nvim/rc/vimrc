@@ -57,8 +57,8 @@ endif
 language message C
 
 " Additional vimrc if you have
-if filereadable(expand('~/.secret_vimrc'))
-  source ~/.secret_vimrc
+if filereadable(expand('~/.personal_vimrc'))
+  source ~/.personal_vimrc
 endif
 
 " load dein
