@@ -34,3 +34,5 @@ eval "$(goenv init -)"
 
 export CARGO_HOME="$HOME/.cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
+
+export MOCWORD_DATA="$HOME/.cache/mocword.sqlite"
