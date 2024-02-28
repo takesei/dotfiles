@@ -61,6 +61,7 @@ conf_nerdfont() {
             echo "NERD FONT NOT FOUND"
             command brew tap homebrew/cask-fonts
             command brew install --cask font-hack-nerd-font
+            command brew install --cask font-mplus-nerd-font
         fi
     elif [ $OS = 'Linux' ]; then
         local installer="https://github.com/ryanoasis/nerd-fonts"
