@@ -17,6 +17,8 @@ export BIN_ROOT=$HOME/Develop/bin
 export PATH=$BIN_ROOT:$PATH
 
 # Package Settings
+source $HOME/.personal_zshrc
+
 if [ -x "$(command -v starship)" ]; then
     case `echo $SHELL | awk -F '/' '{print $NF}'` in
         "bash" ) eval "$(starship init bash)" ;;
@@ -60,4 +62,3 @@ if [ "$(uname)" = "Darwin" ]; then
     bindkey '^r' select-history
 fi
 
-source $HOME/.personal_zshrc
