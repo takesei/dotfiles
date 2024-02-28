@@ -3,9 +3,41 @@
 # Date: 2021/08/21
 
 add_newline = true
+scan_timeout = 10
+command_timeout = 250
 
 [character]
 success_symbol = "[➜](bold green)"
 
+[cmd_duration]
+min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
+format = " took [$duration]($style)"
+
 [package]
 disabled = true
+
+[git_branch]
+symbol = " "
+format = "on [$symbol$branch]($style) "
+
+[username]
+style_user = "green bold"
+style_root = "red bold"
+format = "[$user🌱]($style) "
+disabled = false
+show_always = true
+
+[hostname]
+format = '[$ssh_symbol$hostname]($style) in '
+trim_at = "."
+style = 'bold green'
+disabled = false
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = "…/"
+
+
+[python]
+symbol = " "
