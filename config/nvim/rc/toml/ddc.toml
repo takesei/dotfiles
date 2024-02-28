@@ -62,7 +62,7 @@ repo = 'Shougo/ddc-source-input'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-source-rg'
+repo = 'shun/ddc-source-rg'
 on_source = 'ddc.vim'
 
 [[plugins]]
