@@ -33,14 +33,8 @@ conf_git() {
 }
 
 conf_neovim() {
-    local installer="https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh"
-
     command echo "Configure Neovim"
 
-    if [ ! -f $dir_cache/install_dein.sh ]; then
-        command curl -fsSL $installer > $dir_cache/install_dein.sh
-        command sh $dir_cache/install_dein.sh $XDG_CACHE_HOME/dein
-    fi
 
     command yarn global add neovim
     command pip install --user neovim
