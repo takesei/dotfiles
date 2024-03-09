@@ -6,5 +6,6 @@ return {
     { "<Leader>b", function() require('telescope.builtin').buffers() end,    'n' },
     { "<Leader>h", function() require('telescope.builtin').help_tags() end,  'n' },
     { "<Leader>g", function() require('telescope.builtin').live_grep() end,  'n' },
+    { "<Leader>r", function() require('telescope.builtin').resume() end,  'n' },
   },
 }

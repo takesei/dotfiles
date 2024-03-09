@@ -17,6 +17,7 @@ vim.opt.rtp:prepend(lazy_path)
 -- Use a protected call so we don't error out on first use
 local status_ok, lazy = pcall(require, 'lazy')
 if not status_ok then
+  print("Lazy failed to start")
   return
 end
 

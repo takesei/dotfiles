@@ -61,7 +61,7 @@ map('n', '[Space]c', function()
   else
     vim.opt_local.conceallevel = 0
   end
-  print(vim.opt_local.conceallevel:get())
+  vim.notify(vim.opt_local.conceallevel:get())
 end, { expr = true })
 
 
