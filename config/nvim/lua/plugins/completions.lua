@@ -1,3 +1,7 @@
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
 return {
   'hrsh7th/nvim-cmp',
   dependencies = {
@@ -25,6 +29,20 @@ return {
         ['<C-l>'] = map.complete(),
         ['<C-e>'] = map.abort(),
         ['<CR>'] = map.confirm { select = true },
+        ['<Tab>'] = map(function(fallback)
+          if vim.fn["vsnip#jumpable"](1) == 1 then
+            feedkey("<Plug>(vsnip-jump-next)", "")
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ['<S-Tab>'] = map(function(fallback)
+          if vim.fn["vsnip#jumpable"](-1) == 1 then
+            feedkey("<Plug>(vsnip-jump-prev)", "")
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
       },
       sources = {
         { name = 'nvim_lsp' },
@@ -49,6 +67,5 @@ return {
         { name = 'cmdline' }
       })
     })
-
   end
 }

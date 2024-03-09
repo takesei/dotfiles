@@ -6,7 +6,7 @@ local map = vim.keymap.set
 
 -- Use ',' instead of '\'.
 -- Use <Leader> in global plugin.
-vim.g.mapleader = ','
+vim.g.mapleader = ';'
 
 -- Use <LocalLeader> in filetype plugin.
 vim.g.maplocalleader = 'm'
@@ -14,7 +14,6 @@ vim.g.maplocalleader = 'm'
 -- Release keymappings for plug-in.
 map('n', ';', '<Nop>')
 map('n', 'm', '<Nop>')
-map('n', ',', '<Nop>')
 
 -- Visual mode keymappings:
 -- Indent
