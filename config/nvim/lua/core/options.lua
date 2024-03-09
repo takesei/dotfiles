@@ -73,7 +73,7 @@ opt.commentstring = '%s'
 
 -- Keymapping timeout.
 opt.timeout = true
-opt.timeoutlen = 500
+opt.timeoutlen = 100
 opt.ttimeoutlen = 100
 
 -- CursorHold time.
