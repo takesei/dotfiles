@@ -13,7 +13,7 @@ function Toggle_option(option_name)
     vim.opt_local[option_name] = not vim.opt_local[option_name]:get()
   end
 
-  vim.notify(vim.opt_local[option_name]:get())
+  vim.notify(option_name .. ': ' .. tostring(vim.opt_local[option_name]:get()), "info", {timeout=10})
 end
 
 --[[
