@@ -1,18 +1,34 @@
 ---------------------------------------------------------------------------
-local g = vim.g     -- Global variables
+local g = vim.g -- Global variables
 local opt = vim.opt -- Set options (global/buffer/windows-scoped)
+
+---------------------------------------------------------------------------
+-- Use English interface.
+vim.cmd.language("en_US.UTF-8")
+
+-- Minimal options
+opt.shortmess:append("cI")
+opt.showtabline = 0
+opt.laststatus = 0
+opt.ruler = false
+opt.showcmd = false
+opt.showmode = false
+opt.cmdheight = 0
+opt.title = true
+opt.titlelen = 95
+opt.titlestring = "%{'%:p:~:.'->expand()}%<\\(%{getcwd()->fnamemodify(':~')}\\)%(%y%m%r%)"
 
 ---------------------------------------------------------------------------
 -- Base:
 -- Build encodings.
-opt.fileencodings = 'ucs-bom,utf-8,iso-2022-jp-3,euc-jp,cp932'
+opt.fileencodings = "ucs-bom,utf-8,iso-2022-jp-3,euc-jp,cp932"
+vim.scriptencoding = "utf-8"
+opt.fileencoding = "utf-8"
 
-if vim.fn.has('multi_byte_ime') then
-  opt.iminsert = 0
-  opt.imsearch = 0
+if vim.fn.has("multi_byte_ime") then
+	opt.iminsert = 0
+	opt.imsearch = 0
 end
-
-opt.packpath = ''
 
 ---------------------------------------------------------------------------
 -- Search:
@@ -34,8 +50,6 @@ opt.wrapscan = true
 -----------------------------------------------------------------------------
 -- Edit:
 
--- Smart insert tab setting.
-opt.smarttab = true
 -- Exchange tab to spaces.
 opt.expandtab = true
 -- Substitute <Tab> with blanks.
@@ -51,74 +65,63 @@ opt.shiftround = true
 opt.autoindent = true
 
 -- Disable modeline.
-opt.modelines = 2
 opt.modeline = false
 
 -- Enable backspace delete indent and newline.
-opt.backspace = 'indent,eol,nostop'
-
--- Highlight <>.
-opt.matchpairs:append '<:>'
-
--- Display another buffer when current buffer isn't saved.
-opt.hidden = true
+opt.backspace = "indent,eol,nostop"
 
 -- Disable folding.
 opt.foldenable = false
-opt.foldmethod = 'manual'
+opt.foldmethod = "manual"
 -- Show folding level.
-opt.foldcolumn = 'auto:1'
+opt.foldcolumn = "1"
 opt.fillchars = "vert:|,eob:a"
-opt.commentstring = '%s'
+opt.commentstring = "%s"
 
 -- Keymapping timeout.
 opt.timeout = true
-opt.timeoutlen = 100
+opt.timeoutlen = 500
 opt.ttimeoutlen = 100
 
 -- CursorHold time.
 opt.updatetime = 1000
 
 -- Set swap directory.
-opt.directory:remove "."
+opt.directory:remove(".")
 
 -- Set undofile.
 opt.undofile = true
 g.undodir = opt.directory:get()
 
 -- Enable virtualedit in visual block mode.
-opt.virtualedit = 'block'
+opt.virtualedit = "block"
 
 -- Set keyword help.
-opt.keywordprg = ':help'
+opt.keywordprg = ":help"
 
 -- If true Vim master, use English help file.
-opt.spelllang:append 'cjk'
-opt.spelloptions:append 'camel'
+opt.spelllang:append("cjk")
+opt.spelloptions:append("camel")
 
 -- Default fileformat.
-opt.fileformat = 'unix'
+opt.fileformat = "unix"
 -- Automatic recognition of a new line cord.
-opt.fileformats = 'unix,dos,mac'
+opt.fileformats = "unix,dos,mac"
 
 -- Disable editorconfig
 g.editorconfig = false
 
 -- Copy/paste to system clipboard
-opt.clipboard = 'unnamedplus'
+opt.clipboard = "unnamedplus"
 
 -- Enable mouse support
-opt.mouse = 'a'
+opt.mouse = "a"
 
 -----------------------------------------------------------------------------
 -- View:
 -- Show <TAB> and <CR>
 opt.list = true
 opt.listchars = [[tab:▸\ ,trail:-,precedes:«,nbsp:%]]
-
--- Disable statusline when command line
---autocmd MyAutoCmd CmdlineEnter * opt.laststatus=0 | redrawstatus
---autocmd MyAutoCmd CmdlineLeave * opt.laststatus=2
 
 -- Does not report lines
 opt.report = 1000
@@ -132,28 +135,18 @@ opt.showbreak = [[\]]
 opt.breakat = [[\ \	;:,!?]]
 
 -- Wrap conditions.
-opt.whichwrap:append 'h,l,<,>,[,],b,s,~'
+opt.whichwrap:append("h,l,<,>,[,],b,s,~")
 opt.breakindent = true
 
 -- Don't create backup.
 opt.writebackup = false
 opt.backup = false
 opt.swapfile = false
-opt.backupdir:remove '.'
+opt.backupdir:remove(".")
 
 -- Disable bell.
 opt.visualbell = false
-opt.belloff = 'all'
-
--- Display candidates by popup menu.
-opt.wildmenu = true
-opt.wildmode = 'full'
-
--- Display all the information of the tag by the supplement of the Insert mode.
-opt.showfulltag = true
-
--- Can supplement a tag in a command-line.
-opt.wildoptions:append 'tagfile'
+opt.belloff = "all"
 
 -- Complete all candidates
 opt.wildignorecase = true
@@ -165,16 +158,12 @@ opt.history = 1000
 g.did_install_default_menus = true
 
 -- Completion setting.
-opt.completeopt = 'menuone'
+opt.completeopt = { "menuone", "noselect" }
 
--- Don't complete from other buffer.
-opt.complete = '.'
 -- Set popup menu max height.
 opt.pumheight = 5
 -- Set popup menu min width.
 opt.pumwidth = 0
--- Use "/" for path completion
-opt.completeslash = 'slash'
 
 -- Maintain a current line at the time of movement as much as possible.
 opt.startofline = false
@@ -196,23 +185,21 @@ opt.equalalways = false
 opt.previewheight = 8
 opt.helpheight = 12
 
-opt.ttyfast = true
-
 -- When a line is long, do not omit it in @.
-opt.display = 'lastline'
+opt.display = "lastline"
 -- Display an invisible letter with hex format.
-opt.display:append 'uhex'
+opt.display:append("uhex")
 
 -- For conceal.
 opt.conceallevel = 2
 
--- Disable signcolumn
-opt.signcolumn = 'yes'
-opt.redrawtime = 0
+-- signcolumn
+opt.signcolumn = "yes"
+opt.redrawtime = 2000
 
 -- Disable builtin message pager
 opt.more = false
-opt.inccommand = 'nosplit'
+opt.inccommand = "nosplit"
 
 opt.pumblend = 20
 opt.winblend = 20
@@ -224,55 +211,29 @@ opt.shell = "sh"
 
 -----------------------------------------------------------------------------
 -- For CUI:
---
-
-if not vim.fn.has('gui_running') then
-  -- Enable 256 color terminal.
-  opt.t_Co = 256
-
-  -- Enable the mouse.
-  opt.mouse = 'a'
-end
+opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor"
 
 -----------------------------------------------------------
 -- Startup
 -----------------------------------------------------------
--- Disable nvim intro
-opt.shortmess:append "sI"
-
 local disabled_built_ins = {
-  "2html_plugin",
-  "getscript",
-  "getscriptPlugin",
-  "gzip",
-  "logipat",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
-  "matchit",
-  "tar",
-  "tarPlugin",
-  "rrhelper",
-  "spellfile_plugin",
-  "vimball",
-  "vimballPlugin",
-  "zip",
-  "zipPlugin",
-  "tutor",
-  "rplugin",
-  "synmenu",
-  "optwin",
-  "compiler",
-  "bugreport",
-  "ftplugin",
+	"2html_plugin",
+	"getscriptPlugin",
+	"gzip",
+	"netrw",
+	"netrwPlugin",
+	"netrwSettings",
+	"netrwFileHandlers",
+	"tar",
+	"tarPlugin",
+	"vimball",
+	"vimballPlugin",
+	"zip",
+	"zipPlugin",
+	"tutor",
+	"omnifunc",
 }
 
 for _, plugin in pairs(disabled_built_ins) do
-  g["loaded_" .. plugin] = 1
+	g["loaded_" .. plugin] = 1
 end
-
-vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
