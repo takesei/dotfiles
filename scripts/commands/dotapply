@@ -23,20 +23,20 @@ EOF
 }
 
 parse_args() {
-    local dry_run=0
-    local check_only=0
-    local force=0
+    DRY_RUN=0
+    CHECK_ONLY=0
+    FORCE=0
 
     while [ "$#" -gt 0 ]; do
         case "$1" in
             --dry-run)
-                dry_run=1
+                DRY_RUN=1
                 ;;
             --check)
-                check_only=1
+                CHECK_ONLY=1
                 ;;
             --force)
-                force=1
+                FORCE=1
                 ;;
             -h|--help)
                 print_usage
@@ -50,8 +50,6 @@ parse_args() {
         esac
         shift
     done
-
-    printf '%s %s %s\n' "$dry_run" "$check_only" "$force"
 }
 
 main() {
@@ -61,7 +59,10 @@ main() {
     local os_name
     local package_manager
 
-    read -r dry_run check_only force <<< "$(parse_args "$@")"
+    parse_args "$@"
+    dry_run="$DRY_RUN"
+    check_only="$CHECK_ONLY"
+    force="$FORCE"
     os_name="$(detect_os)"
     package_manager="$(package_manager_for_os "$os_name")"
 

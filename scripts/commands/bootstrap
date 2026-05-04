@@ -43,12 +43,12 @@ EOF
 }
 
 parse_args() {
-    local dry_run=0
+    DRY_RUN=0
 
     while [ "$#" -gt 0 ]; do
         case "$1" in
             --dry-run)
-                dry_run=1
+                DRY_RUN=1
                 ;;
             -h|--help)
                 print_usage
@@ -62,8 +62,6 @@ parse_args() {
         esac
         shift
     done
-
-    printf '%s\n' "$dry_run"
 }
 
 main() {
@@ -71,7 +69,8 @@ main() {
     local package_manager
     local dry_run
 
-    dry_run="$(parse_args "$@")"
+    parse_args "$@"
+    dry_run="$DRY_RUN"
     os_name="$(detect_os)"
     package_manager="$(package_manager_for_os "$os_name")"
     validate_platform "$package_manager"
