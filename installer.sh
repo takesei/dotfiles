@@ -156,6 +156,7 @@ required_packages() {
             neovim \
             fzf \
             ripgrep \
+            xclip \
             zsh-autosuggestions
     fi
 }
@@ -220,28 +221,36 @@ ensure_directories() {
     fi
 }
 
-copy_template_if_missing() {
-    local source_file="$1"
-    local target_file="$2"
-
-    if [ -f "$target_file" ]; then
-        return
-    fi
-
-    cp "$source_file" "$target_file"
-}
-
-prepare_personal_files() {
-    log "Preparing personal configuration files"
-    copy_template_if_missing "$DOTROOT/personal_zshrc.example" "$HOME/.personal_zshrc"
-    copy_template_if_missing "$DOTROOT/personal_vimrc.example" "$HOME/.personal_vimrc"
-}
-
 link_file() {
     local source_file="$1"
     local target_file="$2"
 
     ln -snf "$source_file" "$target_file"
+}
+
+seed_personal_file_if_missing() {
+    local target_file="$1"
+    local home_file="$2"
+    local template_file="$3"
+
+    if [ -f "$target_file" ]; then
+        return
+    fi
+
+    if [ -f "$home_file" ] && [ ! -L "$home_file" ]; then
+        cp "$home_file" "$target_file"
+        return
+    fi
+
+    cp "$template_file" "$target_file"
+}
+
+prepare_personal_files() {
+    log "Preparing personal configuration files"
+    seed_personal_file_if_missing "$DOTROOT/personal_zshrc" "$HOME/.personal_zshrc" "$DOTROOT/personal_zshrc.example"
+    seed_personal_file_if_missing "$DOTROOT/personal_vimrc" "$HOME/.personal_vimrc" "$DOTROOT/personal_vimrc.example"
+    link_file "$DOTROOT/personal_zshrc" "$HOME/.personal_zshrc"
+    link_file "$DOTROOT/personal_vimrc" "$HOME/.personal_vimrc"
 }
 
 configure_git() {

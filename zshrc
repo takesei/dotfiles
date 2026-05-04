@@ -10,7 +10,7 @@ elif [ -x /usr/local/bin/brew ]; then
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-if [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1 && [ -z "${TMUX:-}" ]; then
+if [ "${AUTO_TMUX:-1}" = "1" ] && [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1 && [ -z "${TMUX:-}" ]; then
     if tmux has-session -t default 2>/dev/null; then
         exec tmux attach-session -t default
     else
@@ -65,19 +65,26 @@ else
 fi
 
 function memo() {
-  local defaultname=$(LC_TIME=C date +"%Y-%b%d-%H%M")
-  local fname=${1:-$defaultname}
-  nvim "$HOME/Desktop/temp/$fname.md"
+  local defaultname fname
+  defaultname=$(LC_TIME=C date +"%Y-%b%d-%H%M")
+  fname=${1:-$defaultname}
+  nvim "$TEMP_ROOT/$fname.md"
 }
 
 function cdgit() {
-  cd "$GIT_REPO_ROOT/$(ls "$GIT_REPO_ROOT" | fzf --prompt "Name > ")"
+  local selected
+  selected=$(find "$GIT_REPO_ROOT" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | fzf --prompt "Name > ") || return 0
+  [ -n "$selected" ] || return 0
+  cd "$GIT_REPO_ROOT/$selected" || return
 }
 
 function gitc() {
-  local url
-  url=$(echo "$1" | sed "s/.*github\.com.//" | sed "s/.git//")
-  git clone "$1" "$GIT_REPO_ROOT/$url"
+  local repo url
+  repo="$1"
+  [ -n "$repo" ] || return 1
+  url=$(printf '%s' "$repo" | sed 's#.*github\.com[:/]##' | sed 's#\.git$##')
+  [ -n "$url" ] || return 1
+  git clone "$repo" "$GIT_REPO_ROOT/$url"
 }
 
 function select-history() {
