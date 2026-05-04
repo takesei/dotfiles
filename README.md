@@ -7,10 +7,10 @@
 ## What the scripts do
 - `scripts/commands/bootstrap` installs Homebrew on macOS when needed
 - `scripts/commands/bootstrap` installs required packages with `brew` or `apt`
-- `scripts/commands/apply` creates `~/.personal_zshrc` and `~/.personal_vimrc` when missing
-- `scripts/commands/apply` links the managed dotfiles into your home directory
-- `scripts/commands/apply --check` validates the current setup without changing files
-- `scripts/env.sh` adds `"$DOTROOT/scripts/commands"` to your PATH
+- `scripts/commands/dotapply` creates `~/.personal_zshrc` and `~/.personal_vimrc` when missing
+- `scripts/commands/dotapply` links the managed dotfiles into your home directory
+- `scripts/commands/dotapply --check` validates the current setup without changing files
+- `env.sh` adds `"$DOTROOT/scripts/commands"` to your PATH
 - `installer.sh` stays at the repository root for raw bootstrap installs
 
 ## Configuration you'll get
@@ -35,13 +35,13 @@ If you already have this repository locally, run:
 ```
 
 ## Apply Updates
-Use `scripts/commands/apply` after editing files in this repository.
+Use `scripts/commands/dotapply` after editing files in this repository.
 
 ```bash
-./scripts/commands/apply
-./scripts/commands/apply --dry-run
-./scripts/commands/apply --check
-./scripts/commands/apply --force
+./scripts/commands/dotapply
+./scripts/commands/dotapply --dry-run
+./scripts/commands/dotapply --check
+./scripts/commands/dotapply --force
 ```
 
 ## Personal Configuration

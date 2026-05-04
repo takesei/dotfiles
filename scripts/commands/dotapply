@@ -15,7 +15,7 @@ source "$REPO_ROOT/scripts/lib/dotfiles.sh"
 
 print_usage() {
     cat <<'EOF'
-Usage: ./scripts/commands/apply [--dry-run] [--check] [--force]
+Usage: ./scripts/commands/dotapply [--dry-run] [--check] [--force]
   --dry-run  Print planned actions without changing files
   --check    Validate inputs and current link status
   --force    Backup conflicting files before replacing them

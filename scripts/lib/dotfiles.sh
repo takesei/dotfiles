@@ -165,7 +165,7 @@ run_checks() {
 
     load_env "$dotroot"
 
-    check_path_exists "$dotroot/scripts/env.sh" failed
+    check_path_exists "$dotroot/env.sh" failed
     check_path_exists "$dotroot/commit_template" failed
     check_path_exists "$dotroot/zshrc" failed
     check_path_exists "$dotroot/tmux.conf" failed

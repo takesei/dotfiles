@@ -144,5 +144,5 @@ load_env() {
     local dotroot="$1"
 
     # shellcheck disable=SC1091
-    source "$dotroot/scripts/env.sh"
+    source "$dotroot/env.sh"
 }
