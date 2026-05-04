@@ -22,3 +22,6 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
+
+personal_zshrc
+personal_vimrc
