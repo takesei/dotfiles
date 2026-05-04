@@ -1,22 +1,22 @@
-from python:3.9-slim
+FROM python:3.9-slim
 
-run apt update && \
+RUN apt update && \
     apt install -y git curl zsh make gcc sudo
-run chsh -s /usr/bin/zsh
+RUN chsh -s /usr/bin/zsh
 
-run curl -sL install-node.now.sh/lts | bash -s -- --yes
-run npm install -g yarn
+RUN curl -sL install-node.now.sh/lts | bash -s -- --yes
+RUN npm install -g yarn
 
 
-env HOME /root
-run git clone https://github.com/ryanoasis/nerd-fonts $HOME/.cache/fonts/nerd-fonts
-run sudo $HOME/.cache/fonts/nerd-fonts/install.sh
+ENV HOME /root
+RUN git clone https://github.com/ryanoasis/nerd-fonts $HOME/.cache/fonts/nerd-fonts
+RUN sudo $HOME/.cache/fonts/nerd-fonts/install.sh
 
 
 ENV SHELL /usr/bin/zsh
-run apt install -y neovim fzf ripgrep
+RUN apt install -y neovim fzf ripgrep
 
-workdir $HOME
+WORKDIR $HOME
 ENV PROMPT '%n@%m %1~ %# '
 
-cmd /usr/bin/zsh
+CMD /usr/bin/zsh

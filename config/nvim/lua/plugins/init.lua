@@ -41,6 +41,20 @@ return {
 				end,
 				mode = "n",
 			},
+			{
+				"<C-a>",
+				function()
+					require("dial.map").manipulate("increment", "visual", "default")
+				end,
+				mode = "x",
+			},
+			{
+				"<C-x>",
+				function()
+					require("dial.map").manipulate("decrement", "visual", "default")
+				end,
+				mode = "x",
+			},
 		},
 		config = function()
 			local augend = require("dial.augend")

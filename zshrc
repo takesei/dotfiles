@@ -38,8 +38,9 @@ alias ls="ls --color=auto"
 
 # Custom Functions
 function memo() {
-  local fname=${1:-$(date | awk -F '[":", " "]' '{print $2$3"-"$4":"$5}')}
-  vim $HOME/Desktop/temp/$fname'.md'
+  local defaultname=$(LC_TIME=C date +"%Y-%b%d-%H%M")
+  local fname=${1:-$defaultname}
+  nvim "$HOME/Desktop/temp/$fname.md"
 }
 
 function cdgit() {
@@ -61,4 +62,3 @@ if [ "$(uname)" = "Darwin" ]; then
     zle -N select-history
     bindkey '^r' select-history
 fi
-

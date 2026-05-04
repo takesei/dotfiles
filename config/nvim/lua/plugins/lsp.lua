@@ -15,16 +15,26 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			vim.lsp.set_log_level("info")
-			vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-				callback = function()
-					vim.lsp.buf.format({ timeout_ms = 2000 })
+			-- vim.lsp.set_log_level("info")
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				callback = function(args)
+					local clients = vim.lsp.get_clients({ bufnr = args.buf })
+
+					for _, client in ipairs(clients) do
+						if client.server_capabilities.documentFormattingProvider then
+							vim.lsp.buf.format({
+								bufnr = args.buf,
+								timeout_ms = 2000,
+							})
+							return
+						end
+					end
 				end,
 			})
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          local bufnr = args.buf
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					local bufnr = args.buf
 					if client and client.supports_method("textDocument/inlayHint") then
 						vim.lsp.inlay_hint.enable(true, { buf = bufnr })
 					end
@@ -68,7 +78,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
 			automatic_enable = true,
-			ensure_installed = { "lua_ls", "rust_analyzer", "ruff", "taplo", "marksman", "pyright" },
+			ensure_installed = { "lua_ls", "rust_analyzer", "taplo", "marksman", "pyright", "ruff" },
 		},
 		dependencies = {
 			"williamboman/mason.nvim",

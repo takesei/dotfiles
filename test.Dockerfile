@@ -1,11 +1,11 @@
-from dotfiles-ubuntu:latest
+FROM dotfiles-ubuntu:latest
 
 RUN useradd -ms /bin/bash newuser
-run adduser newuser sudo
-user newuser
+RUN adduser newuser sudo
+USER newuser
 
-workdir /home/newuser
+WORKDIR /home/newuser
 run curl https://raw.githubusercontent.com/takesei/dotfiles/master/installer.sh > installer.sh
-run bash installer.sh
+RUN bash installer.sh
 
-cmd ['bash']
+CMD ['bash']
