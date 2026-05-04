@@ -25,7 +25,7 @@ opt.fileencodings = "ucs-bom,utf-8,iso-2022-jp-3,euc-jp,cp932"
 vim.scriptencoding = "utf-8"
 opt.fileencoding = "utf-8"
 
-if vim.fn.has("multi_byte_ime") then
+if vim.fn.has("multi_byte_ime") == 1 then
 	opt.iminsert = 0
 	opt.imsearch = 0
 end
@@ -91,7 +91,7 @@ opt.directory:remove(".")
 
 -- Set undofile.
 opt.undofile = true
-g.undodir = opt.directory:get()
+opt.undodir = opt.directory:get()
 
 -- Enable virtualedit in visual block mode.
 opt.virtualedit = "block"
