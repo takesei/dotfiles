@@ -12,9 +12,9 @@ export STARSHIP_CACHE="${STARSHIP_CACHE:-$XDG_CACHE_HOME/starship}"
 
 export GIT_REPO_ROOT="${GIT_REPO_ROOT:-$HOME/Develop/github.com}"
 export TEMP_ROOT="${TEMP_ROOT:-$HOME/Develop/temp}"
-export BIN_ROOT="${BIN_ROOT:-$HOME/Develop/bin}"
+export DOTROOT="${DOTROOT:-$HOME/dotfiles}"
 
 case ":$PATH:" in
-    *":$BIN_ROOT:"*) ;;
-    *) export PATH="$BIN_ROOT:$PATH" ;;
+    *":$DOTROOT/scripts/commands:"*) ;;
+    *) export PATH="$DOTROOT/scripts/commands:$PATH" ;;
 esac

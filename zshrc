@@ -1,7 +1,7 @@
 DOTROOT="${DOTROOT:-$HOME/dotfiles}"
 
-if [ -f "$DOTROOT/env.sh" ]; then
-    source "$DOTROOT/env.sh"
+if [ -f "$DOTROOT/scripts/env.sh" ]; then
+    source "$DOTROOT/scripts/env.sh"
 fi
 
 if [ -x /opt/homebrew/bin/brew ]; then

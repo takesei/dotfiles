@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd -P)"
+REPOSITORY_URL="${REPOSITORY_URL:-https://github.com/takesei/dotfiles}"
+DOTROOT="${DOTROOT:-$REPO_ROOT}"
+INSTALL_NERD_FONTS="${INSTALL_NERD_FONTS:-0}"
+
+# shellcheck source=scripts/lib/core.sh
+source "$REPO_ROOT/scripts/lib/core.sh"
+# shellcheck source=scripts/lib/packages.sh
+source "$REPO_ROOT/scripts/lib/packages.sh"
+# shellcheck source=scripts/lib/links.sh
+source "$REPO_ROOT/scripts/lib/links.sh"
+# shellcheck source=scripts/lib/dotfiles.sh
+source "$REPO_ROOT/scripts/lib/dotfiles.sh"
+
+install_nerd_fonts() {
+    local package_manager="$1"
+    local dry_run="$2"
+
+    if [ "$INSTALL_NERD_FONTS" != "1" ]; then
+        log "Skipping Nerd Font installation (set INSTALL_NERD_FONTS=1 to enable)"
+        return
+    fi
+
+    if [ "$package_manager" = "brew" ]; then
+        log "Installing Nerd Fonts"
+        run_cmd "$dry_run" brew tap homebrew/cask-fonts
+        run_cmd "$dry_run" brew install --cask font-hack-nerd-font
+        run_cmd "$dry_run" brew install --cask font-mplus-nerd-font
+    else
+        warn "Automatic Nerd Font installation is not configured for Debian. Install fonts manually if needed."
+    fi
+}
+
+main() {
+    local os_name
+    local package_manager
+    local dry_run=0
+
+    os_name="$(detect_os)"
+    package_manager="$(package_manager_for_os "$os_name")"
+    validate_platform "$package_manager"
+    log "Detected platform: $os_name"
+
+    bootstrap_package_manager "$package_manager" "$dry_run"
+    install_git_if_missing "$package_manager" "$dry_run"
+
+    if [ "$DOTROOT" != "$REPO_ROOT" ] && ! has_cloned_repository "$DOTROOT"; then
+        clone_repository "$REPOSITORY_URL" "$DOTROOT" "$dry_run"
+    fi
+
+    if [ "$DOTROOT" != "$REPO_ROOT" ]; then
+        exec "$DOTROOT/scripts/commands/bootstrap" "$@"
+    fi
+
+    load_env "$DOTROOT"
+    bootstrap_package_manager "$package_manager" "$dry_run"
+    install_required_packages "$package_manager" "$DOTROOT" "$dry_run"
+    ensure_dotfile_directories "$DOTROOT" "$dry_run" 0
+    prepare_personal_files "$DOTROOT" "$dry_run" 0
+    install_nerd_fonts "$package_manager" "$dry_run"
+    configure_dotfiles "$package_manager" "$DOTROOT" "$dry_run" 0
+
+    log "Installation completed. Type 'exec \$SHELL -l' to start."
+}
+
+main "$@"

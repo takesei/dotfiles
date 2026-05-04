@@ -1,0 +1,7 @@
+git
+curl
+zsh
+tmux
+neovim
+fzf
+ripgrep

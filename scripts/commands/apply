@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd -P)"
+
+# shellcheck source=scripts/lib/core.sh
+source "$REPO_ROOT/scripts/lib/core.sh"
+# shellcheck source=scripts/lib/packages.sh
+source "$REPO_ROOT/scripts/lib/packages.sh"
+# shellcheck source=scripts/lib/links.sh
+source "$REPO_ROOT/scripts/lib/links.sh"
+# shellcheck source=scripts/lib/dotfiles.sh
+source "$REPO_ROOT/scripts/lib/dotfiles.sh"
+
+print_usage() {
+    cat <<'EOF'
+Usage: ./scripts/commands/apply [--dry-run] [--check] [--force]
+  --dry-run  Print planned actions without changing files
+  --check    Validate inputs and current link status
+  --force    Backup conflicting files before replacing them
+EOF
+}
+
+parse_args() {
+    local dry_run=0
+    local check_only=0
+    local force=0
+
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            --dry-run)
+                dry_run=1
+                ;;
+            --check)
+                check_only=1
+                ;;
+            --force)
+                force=1
+                ;;
+            -h|--help)
+                print_usage
+                exit 0
+                ;;
+            *)
+                error "Unknown option: $1"
+                print_usage
+                exit 1
+                ;;
+        esac
+        shift
+    done
+
+    printf '%s %s %s\n' "$dry_run" "$check_only" "$force"
+}
+
+main() {
+    local dry_run
+    local check_only
+    local force
+    local os_name
+    local package_manager
+
+    read -r dry_run check_only force <<< "$(parse_args "$@")"
+    os_name="$(detect_os)"
+    package_manager="$(package_manager_for_os "$os_name")"
+
+    validate_platform "$package_manager"
+    bootstrap_package_manager "$package_manager" "$dry_run"
+
+    if [ "$check_only" = "1" ]; then
+        run_checks "$REPO_ROOT"
+        return
+    fi
+
+    load_env "$REPO_ROOT"
+    ensure_dotfile_directories "$REPO_ROOT" "$dry_run" "$force"
+    prepare_personal_files "$REPO_ROOT" "$dry_run" "$force"
+    configure_dotfiles "$package_manager" "$REPO_ROOT" "$dry_run" "$force"
+
+    log "Apply completed."
+}
+
+main "$@"

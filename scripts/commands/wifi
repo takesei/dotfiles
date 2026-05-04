@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+signals=(▂ ▅ ▇)
+raw="$(sudo wdutil info 2>/dev/null)"
+
+if [[ -z "$raw" ]]; then
+    echo "offline"
+    exit 1
+fi
+
+ssid="$(echo "$raw" | awk -F': ' '/^ *SSID/ {print $2}')"
+rssi="$(echo "$raw" | awk -F'[: ]+' '/^ *RSSI/ {print $3}')"
+rate_raw="$(echo "$raw" | awk -F'[: ]+' '/^ *Tx Rate/ {print $4}')"
+
+if [[ -z "${rssi:-}" || -z "${rate_raw:-}" ]]; then
+    echo "offline"
+    exit 1
+fi
+
+rate_int="${rate_raw%.*}"
+signal=""
+
+for ((i=0; i<${#signals[@]}; i++)); do
+    if (( i == 0 && rssi > -100 )) || \
+       (( i == 1 && rssi > -80 )) || \
+       (( i == 2 && rssi > -50 )); then
+        signal+="${signals[i]} "
+    else
+        signal+="  "
+    fi
+done
+
+if (( rate_int == 0 )); then
+    echo "no_wifi"
+    exit 1
+fi
+
+echo "${ssid} ${rate_int}Mbps ${signal}"

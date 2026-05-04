@@ -2,12 +2,10 @@
 
 BATTERY_DANGER=20
 
-# -------- utilities --------
 has() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# -------- core --------
 get_battery_percentage() {
     has pmset || return 1
     pmset -g batt | awk -F';' 'NR==2 {print $1}' | awk '{print $NF}'
@@ -38,23 +36,21 @@ battery_icon() {
     fi
 }
 
-# -------- defaults --------
 MODE="plain"
 SHOW_REMAIN=0
 SHOW_ICON=1
 
-# -------- argument parsing --------
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --ansi)   MODE="ansi" ;;
-        --tmux)   MODE="tmux" ;;
-        --plain)  MODE="plain" ;;
+        --ansi) MODE="ansi" ;;
+        --tmux) MODE="tmux" ;;
+        --plain) MODE="plain" ;;
         -r|--remain) SHOW_REMAIN=1 ;;
-        --icon)   SHOW_ICON=1 ;;
+        --icon) SHOW_ICON=1 ;;
         --no-icon) SHOW_ICON=0 ;;
         -h|--help)
             cat <<EOF 1>&2
-usage: battery.sh [options]
+usage: battery [options]
 
 --ansi        ANSI color output (Nerd Font)
 --tmux        tmux status output
@@ -73,7 +69,6 @@ EOF
     shift
 done
 
-# -------- rendering --------
 pct="$(get_battery_percentage)" || exit 1
 val="${pct%%%*}"
 remain=""
@@ -119,4 +114,3 @@ case "$MODE" in
         printf '%s %s %s\n' "$icon" "$pct" "$remain"
         ;;
 esac
-
