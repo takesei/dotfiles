@@ -1,26 +1,50 @@
-## ZSH CONFIG BY DOTFILE
-# GLOBAL VARIABLE
-export TERM=xterm-256color
+DOTROOT="${DOTROOT:-$HOME/dotfiles}"
 
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_STATE_HOME=$HOME/.local/state
+if [ -f "$DOTROOT/env.sh" ]; then
+    source "$DOTROOT/env.sh"
+fi
 
-export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship.toml
-export STARSHIP_CACHE=$XDG_CACHE_HOME/starship
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
 
-export GIT_REPO_ROOT=$HOME/Develop/github.com
-export TEMP_ROOT=$HOME/Develop/temp
-export BIN_ROOT=$HOME/Develop/bin
+if [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1 && [ -z "${TMUX:-}" ]; then
+    if tmux has-session -t default 2>/dev/null; then
+        exec tmux attach-session -t default
+    else
+        exec tmux new-session -s default -n main
+    fi
+fi
 
-export PATH=$BIN_ROOT:$PATH
+export FPATH="$HOME/.zsh/completions:$FPATH"
 
-# Package Settings
-source $HOME/.personal_zshrc
+if [ -d /opt/homebrew/share/zsh-completions ]; then
+    export FPATH="/opt/homebrew/share/zsh-completions:$FPATH"
+elif [ -d /usr/share/zsh/vendor-completions ]; then
+    export FPATH="/usr/share/zsh/vendor-completions:$FPATH"
+elif [ -d /usr/share/zsh-completions ]; then
+    export FPATH="/usr/share/zsh-completions:$FPATH"
+fi
+
+zstyle ':completion:*:*:make:*' tag-order 'targets'
+autoload -Uz compinit
+compinit
+
+if [ -s /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [ -s /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+
+if [ -f "$HOME/.personal_zshrc" ]; then
+    source "$HOME/.personal_zshrc"
+fi
 
 if [ -x "$(command -v starship)" ]; then
-    case `echo $SHELL | awk -F '/' '{print $NF}'` in
+    case "$(basename "$SHELL")" in
         "bash" ) eval "$(starship init bash)" ;;
         "zsh" ) eval "$(starship init zsh)" ;;
         "fish" ) eval starship init fish | source ;;
@@ -31,12 +55,15 @@ else
     echo "See Also: https://starship.rs"
 fi
 
-# Alias
 alias rl="exec $SHELL -l"
 alias vi="nvim"
-alias ls="ls --color=auto"
 
-# Custom Functions
+if ls --color=auto >/dev/null 2>&1; then
+    alias ls="ls --color=auto"
+else
+    alias ls="ls -G"
+fi
+
 function memo() {
   local defaultname=$(LC_TIME=C date +"%Y-%b%d-%H%M")
   local fname=${1:-$defaultname}
@@ -44,12 +71,13 @@ function memo() {
 }
 
 function cdgit() {
-  cd $GIT_REPO_ROOT/`ls $GIT_REPO_ROOT | fzf --prompt "Name > "`
+  cd "$GIT_REPO_ROOT/$(ls "$GIT_REPO_ROOT" | fzf --prompt "Name > ")"
 }
 
 function gitc() {
-  local url=`echo $1 | sed "s/.*github\.com.//" | sed "s/.git//"`
-  git clone $1 $GIT_REPO_ROOT/$url
+  local url
+  url=$(echo "$1" | sed "s/.*github\.com.//" | sed "s/.git//")
+  git clone "$1" "$GIT_REPO_ROOT/$url"
 }
 
 function select-history() {
