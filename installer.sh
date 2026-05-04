@@ -1,128 +1,303 @@
 #!/usr/bin/env bash
-set -ue
+set -euo pipefail
 
-export repository="https://github.com/takesei/dotfiles"
-export dotroot=$HOME/dotfiles
-export state=0
-export dir_cache
-export OS
+REPOSITORY_URL="${REPOSITORY_URL:-https://github.com/takesei/dotfiles}"
+DOTROOT="${DOTROOT:-$HOME/dotfiles}"
+INSTALL_NERD_FONTS="${INSTALL_NERD_FONTS:-0}"
 
-if [ "$(uname)" = 'Darwin' ]; then
-  OS='Mac'
-elif [ "$(expr substr $(uname -s) 1 5)" = 'Linux' ]; then
-  OS='Linux'
-else
-  echo "Your platform ($(uname -a)) is not supported."
-  exit 1
-fi
+OS=""
+PACKAGE_MANAGER=""
+APT_UPDATED=0
 
-echo "Set the system with [$OS]"
-
-# Clone repository
-if [ ! -d $HOME/dotfiles ]; then
-    git clone $repository $dotroot
-fi
-source $dotroot/zshrc
-
-dir_cache=$XDG_CACHE_HOME/dotfiles
-
-# Configure Functions
-conf_git() {
-    command echo "Configure Git"
-    command git config --global commit.template $dotroot/commit_template
+log() {
+    printf '%s\n' "$1"
 }
 
-conf_neovim() {
-    command echo "Configure Neovim"
-
-
-    command yarn global add neovim
-    command pip install --user neovim
-
-    command ln -snf $dotroot/config/nvim $HOME/.config/nvim
-    command ln -snf $dotroot/personal_vimrc $HOME/.personal_vimrc
+warn() {
+    printf 'Warning: %s\n' "$1" >&2
 }
 
-conf_tmux() {
-    command echo "Configure TMUX"
-    command ln -snf $dotroot/tmux.conf $HOME/.tmux.conf
-}
-
-conf_nerdfont() {
-    command echo "Configure NerdFont"
-    if [ $OS = 'Mac' ]; then
-        if [ `command brew list | grep nerd | wc -l` -eq 0 ]; then
-            echo "NERD FONT NOT FOUND"
-            command brew tap homebrew/cask-fonts
-            command brew install --cask font-hack-nerd-font
-            command brew install --cask font-mplus-nerd-font
-        fi
-    elif [ $OS = 'Linux' ]; then
-        local installer="https://github.com/ryanoasis/nerd-fonts"
-        if [ ! -d $XDG_CACHE_HOME/fonts/nerd-fonts ]; then
-            echo "NERD FONT NOT FOUND"
-            command git clone $installer $XDG_CACHE_HOME/fonts/nerd-fonts
-            command sudo $XDG_CACHE_HOME/fonts/nerd-fonts/install.sh
-        fi
+run_as_root() {
+    if [ "$(id -u)" -eq 0 ]; then
+        "$@"
+    else
+        sudo "$@"
     fi
 }
 
-conf_personal_dir() {
-    command echo "Configure Personal directory Structure"
-    command mkdir -p $GIT_REPO_ROOT
-    command mkdir -p $TEMP_ROOT
-    command mkdir -p $XDG_CACHE_HOME
-    command mkdir -p $XDG_DATA_HOME
-    command mkdir -p $XDG_STATE_HOME
-    command mkdir -p $XDG_CONFIG_HOME
-    command ln -snf $dotroot/bin $BIN_ROOT
+detect_os() {
+    case "$(uname -s)" in
+        Darwin)
+            OS="mac"
+            PACKAGE_MANAGER="brew"
+            ;;
+        Linux)
+            OS="linux"
+            PACKAGE_MANAGER="apt"
+            ;;
+        *)
+            printf 'Your platform (%s) is not supported.\n' "$(uname -a)" >&2
+            exit 1
+            ;;
+    esac
+}
 
-    if [ -d $HOME/Desktop ]; then
-        command ln -snf $TEMP_ROOT $HOME/Desktop/temp
+validate_platform() {
+    if [ "$PACKAGE_MANAGER" = "apt" ] && ! command -v apt-get >/dev/null 2>&1; then
+        printf 'Only Debian-based Linux distributions are supported.\n' >&2
+        exit 1
     fi
 }
 
-conf_starship() {
-    command echo "Configure StarShip"
-
-    if [ ! -x "$(command -v starship)" ]; then
-        if [ $OS = 'Mac' ]; then
-            command brew install starship
-        elif [ $OS = 'Linux' ]; then
-            command sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y
-        fi
+ensure_homebrew() {
+    if command -v brew >/dev/null 2>&1; then
+        return
     fi
 
-    command ln -snf $dotroot/config/starship.toml $HOME/.config/starship.toml
+    log "Installing Homebrew"
+    NONINTERACTIVE=1 /bin/bash -c \
+        "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
-conf_zsh() {
-    command echo "Configure Zsh"
-    command ln -snf $dotroot/zshrc $HOME/.zshrc
-    command ln -snf $dotroot/personal_zshrc $HOME/.personal_zshrc
+activate_homebrew() {
+    if command -v brew >/dev/null 2>&1; then
+        return
+    fi
+
+    if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -x /usr/local/bin/brew ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
 }
 
-# Create Cache Directory
-if [ ! -d $dir_cache ]; then
-    command mkdir -p $dir_cache
-fi
+apt_update_once() {
+    if [ "$APT_UPDATED" -eq 1 ]; then
+        return
+    fi
 
-# Check Logfile
-if [ ! -f $dir_cache/log.txt ]; then
-    command touch $dir_cache/log.txt
-else
-    state=1
-    command echo "Found log.txt, state is $state"
-fi
+    run_as_root apt-get update
+    APT_UPDATED=1
+}
 
-# Configure
-conf_personal_dir
-conf_nerdfont
-conf_neovim
-conf_tmux
-conf_git
-conf_starship
-conf_zsh
+bootstrap_package_manager() {
+    if [ "$PACKAGE_MANAGER" = "brew" ]; then
+        ensure_homebrew
+        activate_homebrew
+    fi
+}
 
-command echo "Instalattion Completed! Type 'exec $SHELL -l' to start."
-command echo "Have fun!!"
+package_installed() {
+    local package_name="$1"
+
+    if [ "$PACKAGE_MANAGER" = "brew" ]; then
+        brew list "$package_name" >/dev/null 2>&1
+    else
+        dpkg -s "$package_name" >/dev/null 2>&1
+    fi
+}
+
+install_package() {
+    local package_name="$1"
+
+    if package_installed "$package_name"; then
+        return
+    fi
+
+    if [ "$PACKAGE_MANAGER" = "brew" ]; then
+        brew install "$package_name"
+    else
+        apt_update_once
+        run_as_root apt-get install -y "$package_name"
+    fi
+}
+
+ensure_git_available() {
+    if command -v git >/dev/null 2>&1; then
+        return
+    fi
+
+    log "Installing git"
+    install_package git
+}
+
+clone_repository() {
+    if [ -d "$DOTROOT" ]; then
+        return
+    fi
+
+    log "Cloning dotfiles into $DOTROOT"
+    git clone "$REPOSITORY_URL" "$DOTROOT"
+}
+
+load_env() {
+    # shellcheck disable=SC1091
+    . "$DOTROOT/env.sh"
+}
+
+required_packages() {
+    if [ "$PACKAGE_MANAGER" = "brew" ]; then
+        printf '%s\n' \
+            git \
+            curl \
+            zsh \
+            tmux \
+            neovim \
+            fzf \
+            ripgrep \
+            starship \
+            zsh-autosuggestions
+    else
+        printf '%s\n' \
+            git \
+            curl \
+            zsh \
+            tmux \
+            neovim \
+            fzf \
+            ripgrep \
+            zsh-autosuggestions
+    fi
+}
+
+install_required_packages() {
+    local package_name
+
+    log "Installing required packages with $PACKAGE_MANAGER"
+
+    while IFS= read -r package_name; do
+        install_package "$package_name"
+    done < <(required_packages)
+}
+
+ensure_starship_available() {
+    if command -v starship >/dev/null 2>&1; then
+        return
+    fi
+
+    log "Installing starship"
+
+    if [ "$PACKAGE_MANAGER" = "brew" ]; then
+        install_package starship
+    else
+        curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+    fi
+}
+
+install_nerd_fonts() {
+    if [ "$INSTALL_NERD_FONTS" != "1" ]; then
+        log "Skipping Nerd Font installation (set INSTALL_NERD_FONTS=1 to enable)"
+        return
+    fi
+
+    if [ "$PACKAGE_MANAGER" = "brew" ]; then
+        log "Installing Nerd Fonts"
+        brew tap homebrew/cask-fonts
+        brew install --cask font-hack-nerd-font
+        brew install --cask font-mplus-nerd-font
+    else
+        warn "Automatic Nerd Font installation is not configured for Debian. Install fonts manually if needed."
+    fi
+}
+
+ensure_directory() {
+    mkdir -p "$1"
+}
+
+ensure_directories() {
+    log "Creating personal directories"
+    ensure_directory "$GIT_REPO_ROOT"
+    ensure_directory "$TEMP_ROOT"
+    ensure_directory "$XDG_CACHE_HOME"
+    ensure_directory "$XDG_DATA_HOME"
+    ensure_directory "$XDG_STATE_HOME"
+    ensure_directory "$XDG_CONFIG_HOME"
+
+    ln -snf "$DOTROOT/bin" "$BIN_ROOT"
+
+    if [ -d "$HOME/Desktop" ]; then
+        ln -snf "$TEMP_ROOT" "$HOME/Desktop/temp"
+    fi
+}
+
+copy_template_if_missing() {
+    local source_file="$1"
+    local target_file="$2"
+
+    if [ -f "$target_file" ]; then
+        return
+    fi
+
+    cp "$source_file" "$target_file"
+}
+
+prepare_personal_files() {
+    log "Preparing personal configuration files"
+    copy_template_if_missing "$DOTROOT/personal_zshrc.example" "$HOME/.personal_zshrc"
+    copy_template_if_missing "$DOTROOT/personal_vimrc.example" "$HOME/.personal_vimrc"
+}
+
+link_file() {
+    local source_file="$1"
+    local target_file="$2"
+
+    ln -snf "$source_file" "$target_file"
+}
+
+configure_git() {
+    log "Configuring Git"
+    git config --global commit.template "$DOTROOT/commit_template"
+}
+
+configure_neovim() {
+    log "Configuring Neovim"
+    ensure_directory "$HOME/.config"
+    link_file "$DOTROOT/config/nvim" "$HOME/.config/nvim"
+}
+
+configure_tmux() {
+    log "Configuring tmux"
+    link_file "$DOTROOT/tmux.conf" "$HOME/.tmux.conf"
+}
+
+configure_starship() {
+    log "Configuring starship"
+    ensure_starship_available
+    ensure_directory "$HOME/.config"
+    link_file "$DOTROOT/config/starship.toml" "$HOME/.config/starship.toml"
+}
+
+configure_zsh() {
+    log "Configuring zsh"
+    link_file "$DOTROOT/zshrc" "$HOME/.zshrc"
+}
+
+configure_dotfiles() {
+    configure_neovim
+    configure_tmux
+    configure_git
+    configure_starship
+    configure_zsh
+}
+
+main() {
+    detect_os
+    validate_platform
+    log "Detected platform: $OS"
+
+    bootstrap_package_manager
+    ensure_git_available
+    clone_repository
+    load_env
+
+    bootstrap_package_manager
+    install_required_packages
+    ensure_directories
+    prepare_personal_files
+    install_nerd_fonts
+    configure_dotfiles
+
+    log "Installation completed. Type 'exec \$SHELL -l' to start."
+}
+
+main "$@"
