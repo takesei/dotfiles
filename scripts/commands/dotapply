@@ -73,10 +73,7 @@ main() {
         return
     fi
 
-    load_env "$REPO_ROOT"
-    ensure_dotfile_directories "$REPO_ROOT" "$dry_run" "$force"
-    prepare_personal_files "$REPO_ROOT" "$dry_run" "$force"
-    configure_dotfiles "$package_manager" "$REPO_ROOT" "$dry_run" "$force"
+    apply_dotfiles_state "$package_manager" "$REPO_ROOT" "$dry_run" "$force"
 
     log "Apply completed."
 }

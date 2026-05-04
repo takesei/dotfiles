@@ -11,7 +11,7 @@ log() {
     printf '%s\n' "$1"
 }
 
-bootstrap_git_for_installer() {
+install_git_for_standalone_installer() {
     if command -v git >/dev/null 2>&1; then
         return
     fi
@@ -46,11 +46,11 @@ bootstrap_git_for_installer() {
     esac
 }
 
-bootstrap_git_for_installer
-
 if [ -f "$BOOTSTRAP_COMMAND" ]; then
     exec "$BOOTSTRAP_COMMAND" "$@"
 fi
+
+install_git_for_standalone_installer
 
 if [ ! -d "$DOTROOT/.git" ]; then
     log "Cloning dotfiles into $DOTROOT"

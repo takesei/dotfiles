@@ -35,11 +35,43 @@ install_nerd_fonts() {
     fi
 }
 
+print_usage() {
+    cat <<'EOF'
+Usage: ./scripts/commands/bootstrap [--dry-run]
+  --dry-run  Print planned actions without changing files
+EOF
+}
+
+parse_args() {
+    local dry_run=0
+
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            --dry-run)
+                dry_run=1
+                ;;
+            -h|--help)
+                print_usage
+                exit 0
+                ;;
+            *)
+                error "Unknown option: $1"
+                print_usage
+                exit 1
+                ;;
+        esac
+        shift
+    done
+
+    printf '%s\n' "$dry_run"
+}
+
 main() {
     local os_name
     local package_manager
-    local dry_run=0
+    local dry_run
 
+    dry_run="$(parse_args "$@")"
     os_name="$(detect_os)"
     package_manager="$(package_manager_for_os "$os_name")"
     validate_platform "$package_manager"
@@ -50,19 +82,20 @@ main() {
 
     if [ "$DOTROOT" != "$REPO_ROOT" ] && ! has_cloned_repository "$DOTROOT"; then
         clone_repository "$REPOSITORY_URL" "$DOTROOT" "$dry_run"
+
+        if [ "$dry_run" = "1" ]; then
+            log "Dry-run completed before re-exec into $DOTROOT"
+            return
+        fi
     fi
 
     if [ "$DOTROOT" != "$REPO_ROOT" ]; then
         exec "$DOTROOT/scripts/commands/bootstrap" "$@"
     fi
 
-    load_env "$DOTROOT"
-    bootstrap_package_manager "$package_manager" "$dry_run"
     install_required_packages "$package_manager" "$DOTROOT" "$dry_run"
-    ensure_dotfile_directories "$DOTROOT" "$dry_run" 0
-    prepare_personal_files "$DOTROOT" "$dry_run" 0
     install_nerd_fonts "$package_manager" "$dry_run"
-    configure_dotfiles "$package_manager" "$DOTROOT" "$dry_run" 0
+    apply_dotfiles_state "$package_manager" "$DOTROOT" "$dry_run" 0
 
     log "Installation completed. Type 'exec \$SHELL -l' to start."
 }

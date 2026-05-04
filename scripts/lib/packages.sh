@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+APT_UPDATED=0
+
 is_package_installed() {
     local package_manager="$1"
     local package_name="$2"
@@ -24,8 +26,20 @@ install_package() {
     if [ "$package_manager" = "brew" ]; then
         run_cmd "$dry_run" brew install "$package_name"
     else
+        apt_update_once "$dry_run"
         run_as_root "$dry_run" apt-get install -y "$package_name"
     fi
+}
+
+apt_update_once() {
+    local dry_run="$1"
+
+    if [ "$APT_UPDATED" = "1" ]; then
+        return
+    fi
+
+    run_as_root "$dry_run" apt-get update
+    APT_UPDATED=1
 }
 
 read_package_file() {
@@ -53,10 +67,6 @@ install_required_packages() {
 
     log "Installing required packages with $package_manager"
 
-    if [ "$package_manager" = "apt" ]; then
-        run_as_root "$dry_run" apt-get update
-    fi
-
     while IFS= read -r package_name; do
         [ -n "$package_name" ] || continue
         install_package "$package_manager" "$dry_run" "$package_name"
@@ -83,6 +93,7 @@ install_starship() {
             install_package "$package_manager" "$dry_run" starship
             ;;
         apt)
+            apt_update_once "$dry_run"
             if can_install_starship_with_apt; then
                 install_package "$package_manager" "$dry_run" starship
             else
@@ -105,10 +116,6 @@ install_git_if_missing() {
     fi
 
     log "Installing git"
-
-    if [ "$package_manager" = "apt" ]; then
-        run_as_root "$dry_run" apt-get update
-    fi
 
     install_package "$package_manager" "$dry_run" git
 }

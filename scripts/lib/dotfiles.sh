@@ -112,6 +112,18 @@ configure_dotfiles() {
     configure_zsh "$dotroot" "$dry_run" "$force"
 }
 
+apply_dotfiles_state() {
+    local package_manager="$1"
+    local dotroot="$2"
+    local dry_run="$3"
+    local force="$4"
+
+    load_env "$dotroot"
+    ensure_dotfile_directories "$dotroot" "$dry_run" "$force"
+    prepare_personal_files "$dotroot" "$dry_run" "$force"
+    configure_dotfiles "$package_manager" "$dotroot" "$dry_run" "$force"
+}
+
 check_path_exists() {
     local path_name="$1"
     local failed_ref="$2"

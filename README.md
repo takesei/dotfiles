@@ -32,6 +32,7 @@ If you already have this repository locally, run:
 
 ```bash
 ./scripts/commands/bootstrap
+./scripts/commands/bootstrap --dry-run
 ```
 
 ## Apply Updates

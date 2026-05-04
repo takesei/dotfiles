@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+CORE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+
+# shellcheck source=scripts/lib/command_helpers.sh
+source "$CORE_DIR/command_helpers.sh"
+
 log() {
     printf '%s\n' "$1"
 }
@@ -80,10 +85,6 @@ validate_platform() {
         error "Only Debian-based Linux distributions are supported."
         exit 1
     fi
-}
-
-has_command() {
-    command -v "$1" >/dev/null 2>&1
 }
 
 has_cloned_repository() {
